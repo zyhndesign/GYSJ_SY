@@ -1,0 +1,142 @@
+//
+//  AppDelegate.m
+//  GYSJ
+//
+//  Created by sunyong on 13-7-23.
+//  Copyright (c) 2013年 sunyong. All rights reserved.
+//
+
+#import "AppDelegate.h"
+#import "LocalSQL.h"
+#import "ViewController.h"
+#import "SimpMenuView.h"
+#import "AllVarible.h"
+#import "Reachability.h"
+
+#import "NetworkDelegate.h"
+
+
+/******* Set your tracking ID here *******/
+
+
+@implementation AppDelegate
+
+
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    [self preData];
+    
+    //////////////////
+    AllMenuPosition_YearDict = [[NSMutableDictionary alloc] init];
+    AllMenuYear_PositionDict = [[NSMutableDictionary alloc] init];
+    AllInfoArray = [[NSMutableArray alloc] init];
+    NSDate * senddate    = [NSDate date];
+    NSCalendar * cal     = [NSCalendar currentCalendar];
+    NSUInteger unitFlags = NSDayCalendarUnit|NSMonthCalendarUnit|NSYearCalendarUnit;
+    NSDateComponents * conponent = [cal components:unitFlags fromDate:senddate];
+    AllNowYears = [conponent year];
+    
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+   // [[UIApplication sharedApplication] setStatusBarHidden:YES];
+    // Override point for customization after application launch.
+    self.viewController = [[ViewController alloc] initWithNibName:@"ViewController" bundle:nil];
+    self.window.rootViewController = self.viewController;
+    RootViewContr = self.viewController;
+    [self.window makeKeyAndVisible];
+    
+    GetVersion *getVision = [[GetVersion alloc] init];
+    getVision.delegate = self;
+    [getVision getVersonFromItunes];
+    
+    return YES;
+}
+
+- (float)getVersion
+{
+    NSDictionary *infoDict = [[NSBundle mainBundle] infoDictionary];
+    NSString *currentVersion = [infoDict objectForKey:@"CFBundleVersion"];
+    return [currentVersion floatValue];
+}
+
+- (void)didReceiveData:(NSDictionary *)dict
+{
+    NSString *resultCount = [dict objectForKey:@"resultCount"];
+    if ([resultCount intValue] > 0)
+    {
+        NSArray *infoArray = [dict objectForKey:@"results"];
+        NSDictionary *releaseInfo = [infoArray objectAtIndex:0];
+        NSString *latestVersion   = [releaseInfo objectForKey:@"version"];
+        NSString *trackViewUrl    = [releaseInfo objectForKey:@"trackViewUrl"];
+        if ([latestVersion floatValue] > [self getVersion])
+        {
+            isNewVersion = 1;
+            [[NSUserDefaults standardUserDefaults] setObject:trackViewUrl forKey:@"versionURL"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }
+    }
+}
+
+
+- (void)didReceiveErrorCode:(NSError*)Error
+{
+//    if ([Error code] == -1009)
+//    {
+//        UIAlertView *alerView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"网络数据连接失败，请检查网络设置。" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+//        [alerView show];
+//        [alerView release];
+//    }
+}
+
+
+- (void)preData
+{
+    NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *docProImagePath = [path stringByAppendingPathComponent:@"ProImage"];
+    NSString *docBgImagePath  = [path stringByAppendingPathComponent:@"BgImage"];
+    BOOL doct = YES;
+    if (![[NSFileManager defaultManager] fileExistsAtPath:docProImagePath isDirectory:&doct])
+    {
+        [[NSFileManager defaultManager] createDirectoryAtPath:docProImagePath withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    if (![[NSFileManager defaultManager] fileExistsAtPath:docBgImagePath isDirectory:&doct])
+    {
+        [[NSFileManager defaultManager] createDirectoryAtPath:docBgImagePath withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    [LocalSQL openDataBase];
+    [LocalSQL createLocalTable];
+    [LocalSQL closeDataBase];
+}
+
+
+- (void)applicationWillResignActive:(UIApplication *)application
+{
+    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
+    // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+}
+
+- (void)applicationDidEnterBackground:(UIApplication *)application
+{
+    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
+    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+}
+
+- (void)applicationWillEnterForeground:(UIApplication *)application
+{
+    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+}
+
+static NSString *const kAllowTracking = @"allowTracking";
+- (void)applicationDidBecomeActive:(UIApplication *)application
+{
+//   [GAI sharedInstance].optOut =
+//    ![[NSUserDefaults standardUserDefaults] boolForKey:kAllowTracking];
+    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+}
+
+- (void)applicationWillTerminate:(UIApplication *)application
+{
+    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+@end

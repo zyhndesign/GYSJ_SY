@@ -1,0 +1,124 @@
+//
+//  LoadZipFileNet.m
+//  GYSJ
+//
+//  Created by sunyong on 13-8-2.
+//  Copyright (c) 2013年 sunyong. All rights reserved.
+//
+
+#import "LoadZipFileNet.h"
+#import "MFSP_MD5.h"
+#import "ZipArchive.h"
+#import "QueueZipHandle.h"
+
+@implementation LoadZipFileNet
+
+@synthesize delegate;
+@synthesize md5Str;
+@synthesize urlStr;
+@synthesize zipStr;
+
+- (void)loadMenuFromUrl
+{
+    //http://lotusprize.com/travel/bundles/eae27d77ca20db309e056e3d2dcd7d69.zip
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlStr] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:120.0f];
+    [request setHTTPMethod:@"GET"];
+    
+    NSURLConnection *connect = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:YES];
+    if (connect)
+    {
+        backData = [[NSMutableData alloc] init];
+    }
+}
+
+- (void)reloadUrlData
+{    
+    [self loadMenuFromUrl];
+}
+
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
+{
+    if ([error code] == -1009)
+    {
+        [QueueZipHandle taskFinish];
+        if (!delegate&& [delegate respondsToSelector:@selector(didReceiveErrorCode:)])
+        {
+            [delegate didReceiveErrorCode:error];
+        }
+        
+        return;
+    }
+    if (connectNum == 2)
+    {
+        [QueueZipHandle taskFinish];
+        [delegate didReceiveErrorCode:error];
+    }
+    else
+    {
+        connectNum++;
+        NSLog(@"zip error:%d",connectNum);
+        [self loadMenuFromUrl];
+    }
+    
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
+{
+    
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
+{
+    [backData appendData:data];
+}
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection
+{
+    NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *filePath = [path stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.zip", zipStr]];
+    
+    NSLog(@"%@", filePath);
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    [fileManager createFileAtPath:filePath contents:backData attributes:nil];
+    
+    if ([[MFSP_MD5 file_md5:filePath] isEqualToString:md5Str])
+    {
+        BOOL isResult = NO;
+      //  NSString *path = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
+        NSString *unZipPath = path;
+        
+        ZipArchive *zip = [[ZipArchive alloc] init];
+        BOOL result;
+        if ([zip UnzipOpenFile:filePath]) {
+            result = [zip UnzipFileTo:unZipPath overWrite:YES];
+            if (!result)
+            {
+                isResult = NO;
+                [fileManager removeItemAtPath:filePath error:nil];
+                [fileManager removeItemAtPath:unZipPath error:nil];
+            }
+            else
+            {
+                isResult = YES;
+            }
+            [zip UnzipCloseFile];
+        }
+        // 解压成功后，删除zip包
+        if (isResult)
+        {
+            [fileManager removeItemAtPath:filePath error:nil];
+            if (delegate != nil && [delegate respondsToSelector:@selector(didReceiveResult:)])
+                [delegate didReceiveResult:isResult];
+        }
+    }
+    else
+    {
+        [fileManager removeItemAtPath:filePath error:nil];
+    }
+    [QueueZipHandle taskFinish];
+}
+
+
+@end
+

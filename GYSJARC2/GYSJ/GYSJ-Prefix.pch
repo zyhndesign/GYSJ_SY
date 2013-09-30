@@ -1,0 +1,84 @@
+#import <Availability.h>
+
+#ifndef __IPHONE_4_0
+#warning "This project uses features only available in iOS SDK 4.0 and later."
+#endif
+
+#ifdef __OBJC__
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#endif
+
+
+//// [UIColor colorWithRed:168.0/255 green:139.0/255 blue:28.0/255 alpha:1]
+
+///// TimeSViewContr
+#define LabelBgColor    [UIColor colorWithRed:181.0/255 green:148.0/255 blue:34.0/255 alpha:1]
+#define LabelFontColor  [UIColor colorWithRed:102/255.0 green:102/255.0 blue:102/255.0 alpha:1]
+#define LabelBgTwoColor [UIColor colorWithRed:153/255.0 green:153/255.0 blue:153/255.0 alpha:1]
+
+#define StartYear 1769     // 开始的年份
+#define StartX 225         // 时间抽的开始位置  470
+#define GapX 200           // 时间抽之间的距离
+#define GapYear 20        /////时间抽上每一年的距离
+
+#define StartLowY 109     // 时间下底线的位置
+#define StartTopY 20      //时间上底线的位置
+#define LabelHeigh 10       //时间抽得高度
+
+
+
+#define ScrollViewContentX 2000    //
+
+/////
+////// 定义submenuview的Tag范围是3000到4000之间,从3000开始
+///SubMenuView
+
+#define MenuStartTag 3000
+#define TimeLabelStartTag 7000
+#define FakeStartTag 50000
+
+#define MenuStartPosX 0 //177    //子菜单的开始位置
+#define MenuViewWidth 670    //子菜单的宽度 341
+#define MenuViewHeigh 450    //子菜单的高度  MenuViewContr的宽度为460，留了10个空间给视图留阴影
+
+
+#define SimpMenuWidth 600 //236
+#define SimpMenuHeigh 400 //315
+
+#define TimeStartOffsetX 20 // 起始偏移位置， 即在时间抽上，scrollerv偏移16个位置才刚好指向初始年1770  20=1770的位置 - 时间指针初始指向的位置
+//////
+#define FilterViewTag 101010
+
+///// 条件选择类型
+#define GenerType 1
+#define PeopleType 2
+#define CompaynType 3
+
+int AllNowYears;   // 今年的年份
+int isOpenMap;    //  判断地图是否开启
+int isScrollAnim; // MenuViewContr中的scroll是否在滑动    在条件刷选和关闭条件更新页面是，isScrollAnim为NO
+int isScrollTimeVAnim;  ///  2是开始， 1是在滑动， 0是结束滑动
+int maxYear;
+int MinYear;     
+int AllMenuCount;
+
+int isNewVersion; //有木有新版本 1为新版本
+int AllWorldStop; // 全部停止
+int newChartYear;  // 最新文章时间（年）
+
+int AllStart; ///// 防止在启动界面滑动时检测rebulitview方法  1为在部署中  -1为部署好了
+int menuViewEixstCount;/////
+//// 结构
+
+ /*
+  接受到数据后
+ 先布局timescrv 得先建立position-year之间的关系
+ 再获取最新的文章的时间（年）
+ 再建立menuscrlv内容，从最新年开始编排界面
+ 1级内存警告删除 个submenuV
+ 2级内存警告删除 个submenuV
+ 3级内存警告删除 个submenuV
+ */
+
+
