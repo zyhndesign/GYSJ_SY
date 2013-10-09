@@ -27,9 +27,11 @@
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad
 {
+    
     UITapGestureRecognizer *tapGetstureR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGest:)];
     [self.view addGestureRecognizer:tapGetstureR];
 
+    scrllview.backgroundColor = [UIColor whiteColor];
     [scrllview setMaximumZoomScale:8];
     [scrllview setMinimumZoomScale:0.3];
     scrllview.scrollsToTop = NO;
@@ -47,6 +49,16 @@
     [stopView addSubview:activeView];
     
     [super viewDidLoad];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+  
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+{
+    return UIInterfaceOrientationIsLandscape(toInterfaceOrientation);
 }
 
 - (void)didReceiveMemoryWarning

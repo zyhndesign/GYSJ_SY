@@ -17,6 +17,7 @@
 #import "DataHandle.h"
 #import <libkern/OSMemoryNotification.h>
 #import "FilterMenuViewContr.h"
+#import "FakeSubMenuView.h"
 
 #define AnimaTime 0.3
 
@@ -49,12 +50,14 @@
     _scrollerView.clipsToBounds = NO;
     _scrollerView.scrollEnabled = NO;
     _scrollerView.bounces = YES;
+    _scrollerView.hidden = NO;
     
     _filterScrollerV.clipsToBounds = NO;
     _filterScrollerV.hidden = YES;
     _filterScrollerV.scrollEnabled = NO;
     _filterScrollerV.bounces = YES;
 }
+
 
 ////// 定义submenuview的Tag范围是3000到4000之间  MenuStartTag = 3000
 //////  timeLabel的tag从7000开始   TimeLabelStartTag == 7000
@@ -129,6 +132,7 @@
     {
         if (view.tag > FakeStartTag)
             [view removeFromSuperview];
+        menuViewEixstCount--;
     }
 }
 
@@ -163,7 +167,6 @@
             }
         }
     }
-    NSLog(@"menuViewEixstCount==%d", menuViewEixstCount);
 }
 ////// count 警告级别
 - (void)deleteMenuView:(int)count
@@ -192,7 +195,6 @@
             }
         }
     }
-    NSLog(@"menuViewEixstCount--->%d", menuViewEixstCount);
 }
 
 - (void)rebuiltFilterMenuView:(NSArray*)eventAry
@@ -239,10 +241,10 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    int level = (int)OSMemoryNotificationCurrentLevel();
-    NSLog(@"MemoryWarning-->level:%d", level);
+//    int level = (int)OSMemoryNotificationCurrentLevel();
+//    NSLog(@"MemoryWarning-->level:%d", level);
     @autoreleasepool {
-        [self deleteMenuView:level];
+        [self deleteMenuView:1];
         [[NSURLCache sharedURLCache] removeAllCachedResponses];
     }
 }
@@ -276,7 +278,6 @@
 
 #pragma mark - gesture 
 //处理快速滑动操作
-
 
 /// 滑动menuview
 static int slipAllGap;
@@ -478,6 +479,7 @@ static BOOL touchOver;  // 边界反弹问题， touchover是在手松开后再�
 }
 
 #pragma mark - scorllview delegate
+
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
 {
     if (delegateScroll)
@@ -498,7 +500,8 @@ static BOOL touchOver;  // 边界反弹问题， touchover是在手松开后再�
         return;
     }
     int page = (int)_scrollerView.contentOffset.x/MenuViewWidth;
-    [self loadCurrentPagePreAfterFive:page count:2];
+    
+    [self loadCurrentPagePreAfterFive:page count:3];
 
     if (scrollView.contentOffset.x < 0 && touchOver)
     {

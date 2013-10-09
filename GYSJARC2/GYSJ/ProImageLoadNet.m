@@ -12,6 +12,8 @@
 
 @implementation ProImageLoadNet
 @synthesize delegate;
+@synthesize _infoDict;
+
 
 - (id)initWithDict:(NSDictionary*)infoDict
 {
@@ -55,7 +57,6 @@
         tempSimMeV.isProImage = YES;
         if (tempSimMeV.isBgImage)
             [delegate didReceiveErrorCode:error];
-        NSLog(@"pro - error:%@", [error debugDescription]);
         [QueueProHanle taskFinish];
     }
     else
@@ -65,15 +66,6 @@
     }
 }
 
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
-{
-    
-}
-
-- (NSInputStream *)connection:(NSURLConnection *)connection needNewBodyStream:(NSURLRequest *)request
-{
-    return nil;
-}
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
     [backData appendData:data];
@@ -83,7 +75,10 @@
 {
     SimpMenuView *tempSimMeV = (SimpMenuView*)delegate;
     if (!tempSimMeV)
+    {
+        [QueueProHanle taskFinish];
         return;
+    }
     tempSimMeV.isProImage = YES;
     [connection cancel];
     NSString *proUrlStr = [_infoDict objectForKey:@"profile"];
@@ -95,11 +90,15 @@
     if ([delegate respondsToSelector:@selector(didReciveImage:)])
     {
         if (tempSimMeV.isBgImage)
-            [delegate didReciveImage:nil];
+            [delegate didReciveImage:[UIImage imageWithData:backData]];
     }
     [QueueProHanle taskFinish];
 }
 
-
+- (void)dealloc
+{
+    delegate = nil;
+    _infoDict = nil;
+}
 
 @end

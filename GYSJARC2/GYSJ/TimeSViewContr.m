@@ -215,7 +215,6 @@
 
 - (void)menuviewMoveStop:(int)years
 {
-    NSLog(@"MoveStop-----%d", years);
     int yearStartPointx = (years - StartYear)*GapYear;
     delegateScroll = YES;
     [_scrollView setContentOffset:CGPointMake(yearStartPointx, 0) animated:YES];

@@ -55,6 +55,11 @@
     [super viewDidLoad];
 }
 
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+{
+    return UIInterfaceOrientationIsLandscape(toInterfaceOrientation);
+}
+
 - (IBAction)back:(UIButton*)sender
 {
     [senderBt setBackgroundImage:[UIImage imageNamed:@"btn_info_gray.png"] forState:UIControlStateNormal];

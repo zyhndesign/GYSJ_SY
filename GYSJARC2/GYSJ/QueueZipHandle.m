@@ -23,6 +23,10 @@ static NSMutableArray *allTaskAry;
 
 + (void)addTarget:(id)target
 {
+    if ([QueueZipHandle isEixstInAry:allTaskAry zipNet:target])
+    {
+        return;
+    }
     if (allTaskAry.count == finishTaskCount)
     {
         [allTaskAry addObject:target];
@@ -31,10 +35,7 @@ static NSMutableArray *allTaskAry;
     }
     else
     {
-        if (![QueueZipHandle isEixstInAry:allTaskAry zipNet:target])
-        {
-            [allTaskAry addObject:target];
-        }
+        [allTaskAry addObject:target];
     }
 }
 
@@ -69,7 +70,6 @@ static NSMutableArray *allTaskAry;
         finishTaskCount--;
     }
     else;
-    NSLog(@"zip:%d", allTaskAry.count);
 }
 
 @end

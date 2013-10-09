@@ -23,6 +23,7 @@ ViewController *RootViewContr;   //
 UIImageView *AllBgImageView;
 UIScrollView *AllTimeScrolV;   // 时间抽上的scrollv
 UIScrollView *AllMenuScrollV;  // 菜单上的scrollv
+UIScrollView *AllFakeScrollV; //// 假象scrollview menu
 MapRuleViewContr *AllMapRuleViewContr;
 MenuViewContr *AllMenuViewContr;
 TimeSViewContr *AllTimeSVContr;

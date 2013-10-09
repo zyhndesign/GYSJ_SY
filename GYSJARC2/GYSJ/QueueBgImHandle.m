@@ -23,8 +23,28 @@ static NSMutableArray *allTaskAry;
     }
 }
 
++ (BOOL)isEixstInAry:(NSArray*)initAry zipNet:(BGImageLoadNet*)target
+{
+    NSArray *array = [NSArray arrayWithArray:initAry];
+    for (int i = 0; i < array.count; i++)
+    {
+        BGImageLoadNet *imageBgNet = [array objectAtIndex:i];
+        if ([imageBgNet._infoDict isEqual:target._infoDict])
+        {
+            imageBgNet.delegate = target.delegate;
+            target.delegate = nil;
+            return YES;
+        }
+    }
+    return NO;
+}
+
 + (void)addTarget:(id)target
 {
+    if ([QueueBgImHandle isEixstInAry:allTaskAry zipNet:target])
+    {
+        return;
+    }
     if (allTaskAry.count == finishTaskCount)
     {
         [allTaskAry addObject:target];
@@ -51,7 +71,6 @@ static NSMutableArray *allTaskAry;
         finishTaskCount--;
     }
     else;
-    NSLog(@"Bg:%d", allTaskAry.count);
 }
 
 

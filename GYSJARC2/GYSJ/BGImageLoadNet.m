@@ -12,6 +12,7 @@
 
 @implementation BGImageLoadNet
 @synthesize delegate;
+@synthesize _infoDict;
 
 - (id)initWithDict:(NSDictionary*)infoDict
 {
@@ -25,6 +26,7 @@
 - (void)loadImageFromUrl
 {
     NSString *urlStr = [[_infoDict objectForKey:@"background"] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+   // urlStr = [urlStr stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     urlStr = [NSString stringWithFormat:@"%@-800x600%@", [urlStr substringToIndex:urlStr.length-4], [urlStr substringFromIndex:urlStr.length-4]];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlStr] cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:120.0f];
     [request setHTTPMethod:@"GET"];
@@ -63,11 +65,6 @@
     }
 }
 
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
-{
-    
-}
-
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
     [backData appendData:data];
@@ -77,7 +74,10 @@
 {
     SimpMenuView *tempSimMeV = (SimpMenuView*)delegate;
     if (!tempSimMeV)
+    {
+        [QueueBgImHandle taskFinish];
         return;
+    }
     tempSimMeV.isBgImage = YES;
     [connection cancel];
     NSString *BgUrlStr = [_infoDict objectForKey:@"background"];
@@ -94,5 +94,9 @@
     [QueueBgImHandle taskFinish];
 }
 
+- (void)dealloc
+{
+    _infoDict = nil;
+}
 
 @end

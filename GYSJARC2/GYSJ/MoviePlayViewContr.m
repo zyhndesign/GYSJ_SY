@@ -45,6 +45,11 @@
     return self;
 }
 
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+{
+    return UIInterfaceOrientationIsLandscape(toInterfaceOrientation);
+}
+
 - (void)moviePlay
 {
     movie = [[MPMoviePlayerController alloc] initWithContentURL:[NSURL URLWithString:urlStr]];

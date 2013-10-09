@@ -35,19 +35,6 @@
 @synthesize infoArray;
 @synthesize _scrollView;
 @synthesize pageIndicatorView;
-@synthesize MyAlpha;
-
-static int cheatMode;
-- (id)initWithMode:(int)mode
-{
-    cheatMode = mode;
-    self = [super init];
-    if(self)
-    {
-        
-    }
-    return self;
-}
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -55,31 +42,15 @@ static int cheatMode;
     self = [super initWithFrame:frame];
     if (self)
     {
-        if (cheatMode == 1)
-        {
-            cheatMode = 0;
-            self.backgroundColor = [UIColor clearColor];
-            [self cheatModeView];
-        }
-        else
-        {
-            self.backgroundColor = [UIColor clearColor];
-            infoArray = [[NSMutableArray alloc] init];
-            self.layer.shadowOffset = CGSizeMake(0, 0);
-            self.layer.shadowRadius = 6;
-            self.layer.shadowOpacity = 0.4;
-            [self addSubviews];
-        }
+        self.backgroundColor = [UIColor clearColor];
+        infoArray = [[NSMutableArray alloc] init];
+        self.layer.shadowOffset = CGSizeMake(0, 0);
+        self.layer.shadowRadius = 6;
+        self.layer.shadowOpacity = 0.4;
+        [self addSubviews];
     }
     
     return self;
-}
-
-- (void)cheatModeView
-{
-    _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(60, 50, SimpMenuWidth, SimpMenuHeigh)];
-    _scrollView.backgroundColor = [UIColor whiteColor];
-    [self addSubview:_scrollView];
 }
 
 - (void)addSubviews
@@ -153,7 +124,7 @@ static int cheatMode;
         [simpleView setFrame:CGRectMake(0, i*SimpMenuHeigh, SimpMenuWidth, SimpMenuHeigh)];
         simpleView.tag = (i+1)*10;
         [_scrollView addSubview:simpleView];
-        simpleView = nil;
+        break;
     }
 }
 
@@ -409,6 +380,28 @@ static int bgTimeCount;
      }];
 }
 //////  touch
+- (void)moveStartStatus
+{
+    if([self updatePageIndiView])
+    {
+        isScrollAnim = 0;
+        SimpMenuView *simpMview2  = (SimpMenuView*)[_scrollView viewWithTag:((_scrollView.contentOffset.y+ 50)/SimpMenuHeigh+1)*10];
+        if (!simpMview2)
+        {
+            int Tag = _scrollView.contentOffset.y/SimpMenuHeigh;
+            simpMview2 = [[SimpMenuView alloc] initWithDict:[infoArray objectAtIndex:Tag]];
+            [simpMview2 setFrame:CGRectMake(0, Tag*SimpMenuHeigh, SimpMenuWidth, SimpMenuHeigh)];
+            simpMview2.tag = (Tag+1)*10;
+            [_scrollView addSubview:simpMview2];
+        }
+        for(UIView *view in [_scrollView subviews])
+        {
+            if (view == simpMview2)
+                continue;
+            [view removeFromSuperview];
+        }
+    }
+}
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
@@ -437,7 +430,6 @@ static int bgTimeCount;
             [_scrollView addSubview:simpleView];
         }
     }
-    
 }
 
 ///// 设置减速度
@@ -445,15 +437,27 @@ static int bgTimeCount;
 {
     if (!decelerate)
     {
-        int tagV = scrollView.contentOffset.x/SimpMenuHeigh;
-        for(UIView *view in [scrollView subviews])
+        if([self updatePageIndiView])
         {
-            if (view.tag == (tagV+1)*10)
-                continue;
-            [view removeFromSuperview];
+            isScrollAnim = 0;
+            SimpMenuView *simpMview2  = (SimpMenuView*)[_scrollView viewWithTag:((_scrollView.contentOffset.y+ 50)/SimpMenuHeigh+1)*10];
+            if (!simpMview2)
+            {
+                int Tag = _scrollView.contentOffset.y/SimpMenuHeigh;
+                simpMview2 = [[SimpMenuView alloc] initWithDict:[infoArray objectAtIndex:Tag]];
+                [simpMview2 setFrame:CGRectMake(0, Tag*SimpMenuHeigh, SimpMenuWidth, SimpMenuHeigh)];
+                simpMview2.tag = (Tag+1)*10;
+                [_scrollView addSubview:simpMview2];
+            }
+            for(UIView *view in [scrollView subviews])
+            {
+                if (view == simpMview2)
+                    continue;
+                [view removeFromSuperview];
+            }
+            [MenuViewContr scrollStopUpdaBgImage];
         }
     }
-    
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
@@ -461,7 +465,7 @@ static int bgTimeCount;
     if([self updatePageIndiView])
     {
         isScrollAnim = 0;
-        SimpMenuView *simpMview2  = (SimpMenuView*)[_scrollView viewWithTag:(_scrollView.contentOffset.y/SimpMenuHeigh+1)*10];
+        SimpMenuView *simpMview2  = (SimpMenuView*)[_scrollView viewWithTag:((_scrollView.contentOffset.y+ 50)/SimpMenuHeigh+1)*10];
         if (!simpMview2)
         {
             int Tag = _scrollView.contentOffset.y/SimpMenuHeigh;
@@ -478,7 +482,6 @@ static int bgTimeCount;
         }
         [MenuViewContr scrollStopUpdaBgImage];
     }
-    
 }
 
 - (BOOL)updatePageIndiView

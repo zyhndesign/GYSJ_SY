@@ -6,16 +6,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "GYSJ/FilterMenuViewContr.m"
-            timestampString = "402117338.027711"
+            filePath = "GYSJ/ProImageLoadNet.m"
+            timestampString = "402914372.194467"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "234"
-            endingLineNumber = "234"
-            landmarkName = "-viewUpdate:"
+            startingLineNumber = "54"
+            endingLineNumber = "54"
+            landmarkName = "-connection:didFailWithError:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

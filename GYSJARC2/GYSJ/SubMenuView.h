@@ -19,15 +19,14 @@
 @property(nonatomic, assign)int years;
 @property(nonatomic)UIScrollView *_scrollView;
 @property(nonatomic)UIView *pageIndicatorView;
-@property(nonatomic, assign)CGFloat MyAlpha;
 
+- (void)moveStartStatus;
 - (void)updateMapInfo;
 - (void)builtView;
 - (void)updageBgImage;
 //+ (void)updageBgImage:(UIImage *)newImage imageName:(NSString*)imageName; //// 更改背景图
 - (BOOL)updatePageIndiView;
 - (void)initBgImage;
-- (id)initWithMode:(int)mode;
 /*
 绘制界面有两种方法，
 第一种方法是initdataAry属性法（里面封装的是第二种方法），

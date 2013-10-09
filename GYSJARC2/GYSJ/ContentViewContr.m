@@ -57,7 +57,6 @@
     _webView.scrollView.scrollsToTop = NO;
     NSString *doctPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)  lastObject];
     NSString *documentPath = [doctPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@", [initDict objectForKey:@"id"]]];
-    NSLog(@"%@", documentPath);
     BOOL dirBOOL = YES;
     if([[NSFileManager defaultManager] fileExistsAtPath:documentPath isDirectory:&dirBOOL])
     {
@@ -70,8 +69,14 @@
     }
 }
 
-- (void)viewDidAppear:(BOOL)animated
+- (void)viewWillAppear:(BOOL)animated
 {
+   
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+{
+    return UIInterfaceOrientationIsLandscape(toInterfaceOrientation);
 }
 
 - (void)dealloc
@@ -208,8 +213,6 @@
     self.view.hidden = NO;
 }
 
-
-
 #pragma mark - webview delegate
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
@@ -217,16 +220,15 @@
     NSString *urlStr = [[request URL] description];
     if ([urlStr componentsSeparatedByString:@"show_image"].count > 1 || [urlStr componentsSeparatedByString:@"wp-content"].count > 1)
     {
-        NSLog(@"%@", urlStr);
         ImageViewShowContr *imageViewSContr = [[ImageViewShowContr alloc] initwithURL:urlStr];
         [self presentViewController:imageViewSContr animated:YES completion:nil];
         return NO;
     }
     else if ([urlStr componentsSeparatedByString:@"show_media"].count > 1)
     {
-        NSString *replaceStr = @"192.168.1.18";
-        NSString *testStr = @"lotusprize.com";
-        urlStr = [urlStr stringByReplacingOccurrencesOfString:testStr withString:replaceStr];
+//        NSString *replaceStr = @"192.168.1.18";
+//        NSString *testStr = @"lotusprize.com";
+//        urlStr = [urlStr stringByReplacingOccurrencesOfString:testStr withString:replaceStr];
         NSString *movieUrlStr = [infoDict objectForKey:urlStr];
         if (movieUrlStr.length < 1)
             return NO;

@@ -79,10 +79,7 @@
     //// data
 
     stopAllView.hidden = NO;
-
-//    //// test
-  //  [self didReceiveData:nil];
-    
+   
     LoadMenuInfoNet *loadMenuNet = [[LoadMenuInfoNet alloc] init];
     loadMenuNet.delegate = self;
     [loadMenuNet loadMenuFromUrl];
@@ -91,6 +88,11 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+{
+    return UIInterfaceOrientationIsLandscape(toInterfaceOrientation);
 }
 
 static NSString *const kTrackingId = @"UA-41833465-3";
@@ -159,23 +161,12 @@ static NSString *const kTrackingId = @"UA-41833465-3";
     NSLog(@"rootView didReceiveMemoryWarning");
     [super didReceiveMemoryWarning];
     @autoreleasepool {
-        [launchView removeFromSuperview];
-        launchView = nil;
-    
-//    if (filterMenuViewContr.view.hidden)
-//    {
-//        [filterMenuViewContr.view removeFromSuperview];
-//        filterMenuViewContr.delegate = nil;
-//        [filterMenuViewContr release];
-//        filterMenuViewContr = nil;
-//    }
-//    if (!isOpenMap && mapRuleViewContr)
-//    {
-//        [mapRuleViewContr.view removeFromSuperview];
-//        mapRuleViewContr.delegate = nil;
-//        [mapRuleViewContr release];
-//        mapRuleViewContr = nil;
-//    }
+        if (launchView != nil)
+        {
+            [launchView removeFromSuperview];
+            launchView = nil;
+        }
+        
     }
 }
 
@@ -408,8 +399,7 @@ static NSString *const kTrackingId = @"UA-41833465-3";
     rang.length = end - start + 1;
     rang.location = start;
     AllStart = 1;
-    [menuViewContr  rebuiltMenuView:[AllInfoArray subarrayWithRange:rang]];
-    AllStart = -1;
+    [menuViewContr rebuiltMenuView:[AllInfoArray subarrayWithRange:rang]];
     [self addFilterView];
     
     /////// 从最新文章的前6个开始移动
@@ -422,11 +412,18 @@ static NSString *const kTrackingId = @"UA-41833465-3";
     [launchView setHidden:YES];
     [self performSelector:@selector(moveLastEssay:) withObject:newDict afterDelay:0.2];
     newDict = nil;
+    
+    [launchView removeFromSuperview];
+    launchView = nil;
 }
 
 
 - (void)didReceiveErrorCode:(NSError*)Error
 {
+    if (Error != nil && [Error code] == -1009)
+    {
+        [self alertView:@"网络连接失败，请检查网络设置。"];
+    }
     [LocalSQL openDataBase];
     [AllInfoArray removeAllObjects];
     [AllInfoArray addObjectsFromArray:[LocalSQL getAll]];
@@ -435,6 +432,8 @@ static NSString *const kTrackingId = @"UA-41833465-3";
         [LocalSQL closeDataBase];
         stopAllView.hidden = NO;
         [launchView setHidden:YES];
+        if ([Error code] != -1009)
+            [self alertView:@"网络数据有误"];
         return;
     }
     //// newestChart time
@@ -450,7 +449,6 @@ static NSString *const kTrackingId = @"UA-41833465-3";
     [menuViewContr rebuiltBaseView];
     AllStart = 1;
     [menuViewContr rebuiltMenuView:AllInfoArray];
-    AllStart = -1;
     [self addFilterView];
     if ([Error code] == -1009)
     {
@@ -468,12 +466,14 @@ static NSString *const kTrackingId = @"UA-41833465-3";
     [launchView setHidden:YES];
     [self performSelector:@selector(moveLastEssay:) withObject:newDict afterDelay:0.2];
     newDict = nil;
+    
+    [launchView removeFromSuperview];
+    launchView = nil;
 }
 
 //// 移动到最新文章位置
 - (void)moveLastEssay:(NSDictionary*)newDict
 {
-    NSLog(@"allCount:%d", AllInfoArray.count);
     int newYear = [[newDict objectForKey:@"year"] intValue];
     if (newYear == 0)
         newYear = StartYear;
@@ -486,6 +486,7 @@ static NSString *const kTrackingId = @"UA-41833465-3";
     float times = 1.8;
     if (newPage < 6)
         times = newPage*1.8/6;
+    AllStart = -1;
     [UIView animateWithDuration:times
                      animations:^(void){
                          [AllTimeScrolV  setContentOffset:CGPointMake((newYear-StartYear)*GapYear, 0)];
@@ -501,6 +502,7 @@ static NSString *const kTrackingId = @"UA-41833465-3";
                              if ([newIdStr isEqualToString:idStr])
                              {
                                  [subMenuVMid._scrollView setContentOffset:CGPointMake(0, i*SimpMenuHeigh)];
+                                 [subMenuVMid moveStartStatus];
                              }
                          }
                          [subMenuVMid updatePageIndiView];

@@ -11,9 +11,23 @@
 @interface SimpMenuView : UIView<NetworkDelegate>
 {
     UIImageView *imageViewPro;
+
+    UITextView *titleTextV;
+    UILabel *midLineLB;
+    UIImageView *imageVFu1;
+    UILabel *lbFu1;
+    UIImageView *imageVFu2;
+    UILabel *lbFu2;
+    UIImageView *imageVOne;
+    UILabel *lbOne;
+    UIImageView *imageVTwo;
+    UILabel *lbTwo;
+    UIImageView *imageVThr;
+    UILabel *lbThr;
 }
 
 - (id)initWithDict:(NSDictionary*)infoDict;
+- (void)addDataToView:(NSDictionary*)infoDict;
 
 @property(nonatomic, strong)NSDictionary *_infoDict;
 @property(nonatomic, assign)CGPoint positionP;

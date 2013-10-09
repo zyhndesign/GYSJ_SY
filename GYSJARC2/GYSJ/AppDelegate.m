@@ -19,6 +19,7 @@
 /******* Set your tracking ID here *******/
 
 
+
 @implementation AppDelegate
 
 
@@ -26,7 +27,6 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [self preData];
-    
     //////////////////
     AllMenuPosition_YearDict = [[NSMutableDictionary alloc] init];
     AllMenuYear_PositionDict = [[NSMutableDictionary alloc] init];
@@ -37,14 +37,19 @@
     NSDateComponents * conponent = [cal components:unitFlags fromDate:senddate];
     AllNowYears = [conponent year];
     
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-   // [[UIApplication sharedApplication] setStatusBarHidden:YES];
+    CGRect windowRect = [[UIScreen mainScreen] bounds];
+    self.window = [[UIWindow alloc] initWithFrame:windowRect];
     // Override point for customization after application launch.
     self.viewController = [[ViewController alloc] initWithNibName:@"ViewController" bundle:nil];
     self.window.rootViewController = self.viewController;
     RootViewContr = self.viewController;
     [self.window makeKeyAndVisible];
     
+    if (ios7)
+    {
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    }
+    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
     GetVersion *getVision = [[GetVersion alloc] init];
     getVision.delegate = self;
     [getVision getVersonFromItunes];

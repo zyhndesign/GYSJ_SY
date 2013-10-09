@@ -23,8 +23,28 @@ static NSMutableArray *allTaskAry;
     
 }
 
++ (BOOL)isEixstInAry:(NSArray*)initAry zipNet:(ProImageLoadNet*)target
+{
+    NSArray *array = [NSArray arrayWithArray:initAry];
+    for (int i = 0; i < array.count; i++)
+    {
+        ProImageLoadNet *proBgNet = [array objectAtIndex:i];
+        if ([proBgNet._infoDict isEqual:target._infoDict])
+        {
+            proBgNet.delegate = target.delegate;
+            target.delegate = nil;
+            return YES;
+        }
+    }
+    return NO;
+}
+
 + (void)addTarget:(id)target
 {
+    if ([QueueProHanle isEixstInAry:allTaskAry zipNet:target])
+    {
+        return;
+    }
     if (allTaskAry.count == finishTaskCount)
     {
         [allTaskAry addObject:target];
@@ -32,7 +52,9 @@ static NSMutableArray *allTaskAry;
         [tempProNet loadImageFromUrl];
     }
     else
+    {
         [allTaskAry addObject:target];
+    }
 }
 
 + (void)taskFinish
@@ -51,7 +73,6 @@ static NSMutableArray *allTaskAry;
         finishTaskCount--;
     }
     else;
-    NSLog(@"pro:%d", allTaskAry.count);
 }
 
 @end

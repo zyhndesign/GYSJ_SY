@@ -35,7 +35,8 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        //[self addSubviews];
+        self.backgroundColor = [UIColor whiteColor];
+        [self addSubviews];
     }
     return self;
 }
@@ -64,32 +65,94 @@
 
 - (void)addSubviews
 {
-    imageViewPro = [[UIImageView alloc] initWithFrame:CGRectMake(20, 20, ImageWidth, ImageHeigh)];
-    [self addSubview:imageViewPro];
-    [self addProInfoView];
+    [self addBaseView];
+    [self addDataToView:_infoDict];
     [self addImageV];
 }
 
 #define startImVX 0
 #define startLbX 27
-- (void)addProInfoView
+
+- (void)addBaseView
 {
-    UITextView *titleTextV = [[UITextView alloc] initWithFrame:CGRectMake(SimpMenuWidth - 200, 6, 190, 300)];
+    imageViewPro = [[UIImageView alloc] initWithFrame:CGRectMake(20, 20, ImageWidth, ImageHeigh)];
+    [self addSubview:imageViewPro];
+    titleTextV = [[UITextView alloc] initWithFrame:CGRectMake(SimpMenuWidth - 200, 6, 190, 300)];
     titleTextV.textColor = LabelBgColor;
     titleTextV.font = [UIFont boldSystemFontOfSize:37];
-    titleTextV.text = [_infoDict objectForKey:@"name"];
     titleTextV.backgroundColor = [UIColor clearColor];
     titleTextV.scrollEnabled   = NO;
     titleTextV.editable        = NO;
     [self addSubview:titleTextV];
-    titleTextV = nil;
     
-    NSString *artitStr = [_infoDict objectForKey:@"artists"];
-    NSString *cityStr  = [_infoDict objectForKey:@"city"];
-    NSString *genreStr = [_infoDict objectForKey:@"genre"];
-    NSString *organStr = [_infoDict objectForKey:@"organizations"];
-    NSString *yearStr  = [_infoDict objectForKey:@"year"];
+    midLineLB = [[UILabel alloc] init];
+    midLineLB.backgroundColor = LabelBgTwoColor;
+    [self addSubview:midLineLB];
     
+    imageVFu2 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_date_gray.png.png"]];
+    lbFu2 = [[UILabel alloc] init];
+    lbFu2.font = [UIFont systemFontOfSize:15];
+    lbFu2.textColor = LabelFontColor;
+    lbFu2.backgroundColor = [UIColor clearColor];
+    [self addSubview:imageVFu2];
+    [self addSubview:lbFu2];
+    
+    imageVFu1 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_genre_gray.png"]];
+    lbFu1 = [[UILabel alloc] init];
+    lbFu1.font = [UIFont systemFontOfSize:15];
+    lbFu1.textColor = LabelFontColor;
+    lbFu1.backgroundColor = [UIColor clearColor];
+    [self addSubview:imageVFu1];
+    [self addSubview:lbFu1];
+    
+    imageVOne = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_location_gray.png"]];
+    lbOne = [[UILabel alloc] init];
+    lbOne.font = [UIFont systemFontOfSize:15];
+    lbOne.textColor = LabelFontColor;
+    lbOne.backgroundColor = [UIColor clearColor];
+    [self addSubview:imageVOne];
+    [self addSubview:lbOne];
+    
+    imageVTwo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_people_gray.png"]];
+    lbTwo = [[UILabel alloc] init];
+    lbTwo.font = [UIFont systemFontOfSize:15];
+    lbTwo.backgroundColor = [UIColor clearColor];
+    lbTwo.textColor = LabelFontColor;
+    [self addSubview:imageVTwo];
+    [self addSubview:lbTwo];
+    
+    imageVThr = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_orgnization_gray.png"]];
+    lbThr = [[UILabel alloc] init];
+    lbThr.font = [UIFont systemFontOfSize:15];
+    lbThr.textColor = LabelFontColor;
+    lbThr.backgroundColor = [UIColor clearColor];
+    [self addSubview:imageVThr];
+    [self addSubview:lbThr];
+}
+
+- (void)addDataToView:(NSDictionary*)infoDict
+{
+    _infoDict = infoDict;
+
+    imageVFu1.hidden = YES;
+    lbFu1.hidden     = YES;
+    imageVFu2.hidden = YES;
+    lbFu2.hidden     = YES;
+    imageVOne.hidden = YES;
+    lbOne.hidden     = YES;
+    imageVTwo.hidden = YES;
+    lbTwo.hidden     = YES;
+    imageVThr.hidden = YES;
+    lbThr.hidden     = YES;
+    
+    titleTextV.text = [_infoDict objectForKey:@"name"];
+    
+    NSString *artitStr = [infoDict objectForKey:@"artists"];
+    NSString *cityStr  = [infoDict objectForKey:@"city"];
+    NSString *genreStr = [infoDict objectForKey:@"genre"];
+    NSString *organStr = [infoDict objectForKey:@"organizations"];
+    NSString *yearStr  = [infoDict objectForKey:@"year"];
+
     int count = 0;
     if (yearStr.length > 0)
     {
@@ -109,94 +172,56 @@
     int startX = SimpMenuWidth - 200;
     int startY = 404 - count*30 - 20 - 10;
     
-    UILabel *midLineLB = [[UILabel alloc] initWithFrame:CGRectMake(startX, startY+5, 180, 1)];
-    midLineLB.backgroundColor = LabelBgTwoColor;
-    [self addSubview:midLineLB];
-    midLineLB = nil;
+    [midLineLB setFrame:CGRectMake(startX, startY+5, 180, 1)];
     
     int position = 0;
     if (yearStr.length > 0)
     {
-        UIImageView *imageVFu2 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_date_gray.png.png"]];
-        imageVFu2.frame = CGRectMake(startX + startImVX,startY + 20+position*30, 20, 20);
-        UILabel *lbFu2 = [[UILabel alloc] initWithFrame:CGRectMake(startX+startLbX, startY+20+position*30 - 1, 162, 20)];
+        imageVFu2.hidden = NO;
+        lbFu2.hidden     = NO;
+        [imageVFu2 setFrame:CGRectMake(startX + startImVX,startY + 20+position*30, 20, 20)];
+        [lbFu2 setFrame:CGRectMake(startX+startLbX, startY+20+position*30 - 1, 162, 20)];
         lbFu2.text = yearStr;
-        lbFu2.font = [UIFont systemFontOfSize:15];
-        lbFu2.textColor = LabelFontColor;
-        lbFu2.backgroundColor = [UIColor clearColor];
-        [self addSubview:imageVFu2];
-        [self addSubview:lbFu2];
-        imageVFu2 = nil;
-        lbFu2 = nil;
-        
         position++;
     }
     if (genreStr.length > 0)
     {
-        UIImageView *imageVFu1 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_genre_gray.png"]];
+        imageVFu1.hidden = NO;
+        lbFu1.hidden     = NO;
         imageVFu1.frame = CGRectMake(startX + startImVX, startY + 20+position*30, 20, 20);
-        UILabel *lbFu1 = [[UILabel alloc] initWithFrame:CGRectMake(startX + startLbX,startY+20+position*30 - 1, 162, 20)];
+        [lbFu1 setFrame:CGRectMake(startX + startLbX,startY+20+position*30 - 1, 162, 20)];
         lbFu1.text = genreStr;
-        lbFu1.font = [UIFont systemFontOfSize:15];
-        lbFu1.textColor = LabelFontColor;
-        lbFu1.backgroundColor = [UIColor clearColor];
-        [self addSubview:imageVFu1];
-        [self addSubview:lbFu1];
-        imageVFu1 = nil;
-        lbFu1 = nil;
-        
         position++;
     }
     
     if (cityStr.length > 0)
     {
-        UIImageView *imageVOne = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_location_gray.png"]];
+        imageVOne.hidden = NO;
+        lbOne.hidden     = NO;
         imageVOne.frame = CGRectMake(startX + startImVX, startY + 20+position*30, 20, 20);
-        UILabel *lbOne = [[UILabel alloc] initWithFrame:CGRectMake(startX + startLbX, startY + 20+position*30 - 1, 162, 20)];
+        [lbOne setFrame:CGRectMake(startX + startLbX, startY + 20+position*30 - 1, 162, 20)];
         lbOne.text = cityStr;
-        lbOne.font = [UIFont systemFontOfSize:15];
-        lbOne.textColor = LabelFontColor;
-        lbOne.backgroundColor = [UIColor clearColor];
-        [self addSubview:imageVOne];
-        [self addSubview:lbOne];
-        imageVOne = nil;
-        lbOne = nil;
-        
         position++;
     }
     
     if (artitStr.length > 0)
     {
-        UIImageView *imageVTwo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_people_gray.png"]];
+        imageVTwo.hidden = NO;
+        lbTwo.hidden     = NO;
         imageVTwo.frame = CGRectMake(startX + startImVX, startY + 20+position*30, 20, 20);
-        UILabel *lbTwo = [[UILabel alloc] initWithFrame:CGRectMake(startX + startLbX, startY + 20+position*30 - 1, 162, 20)];
+        [lbTwo setFrame:CGRectMake(startX + startLbX, startY + 20+position*30 - 1, 162, 20)];
         lbTwo.text = artitStr;
-        lbTwo.font = [UIFont systemFontOfSize:15];
-        lbTwo.backgroundColor = [UIColor clearColor];
-        lbTwo.textColor = LabelFontColor;
-        [self addSubview:imageVTwo];
-        [self addSubview:lbTwo];
-        imageVTwo = nil;
-        lbTwo = nil;
-        
         position++;
     }
     if (organStr.length > 0)
     {
-        UIImageView *imageVThr = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_orgnization_gray.png"]];
+        imageVThr.hidden = NO;
+        lbThr.hidden     = NO;
         imageVThr.frame = CGRectMake(startX + startImVX, startY + 20+position*30, 20, 20);
-        UILabel *lbThr = [[UILabel alloc] initWithFrame:CGRectMake(startX + startLbX, startY + 20+position*30 - 1, 162, 20)];
+        [lbThr setFrame:CGRectMake(startX + startLbX, startY + 20+position*30 - 1, 162, 20)];
         lbThr.text = organStr;
-        lbThr.font = [UIFont systemFontOfSize:15];
-        lbThr.textColor = LabelFontColor;
-        lbThr.backgroundColor = [UIColor clearColor];
-        [self addSubview:imageVThr];
-        [self addSubview:lbThr];
-        imageVThr = nil;
-        lbThr = nil;
     }
 }
-
 
 - (void)addImageV
 {
@@ -252,12 +277,11 @@
 
 - (void)didReceiveErrorCode:(NSError *)Error
 {
-   
+    NSLog(@"imageError:%@", [Error debugDescription]);
 }
 
 - (void)didReciveImage:(UIImage *)backImage
 {
-    
     NSString *proUrlStr = [_infoDict objectForKey:@"profile"];
     NSString *proImgeFormat = [[proUrlStr componentsSeparatedByString:@"."] lastObject];
     NSString *BgUrlStr = [_infoDict objectForKey:@"background"];
@@ -266,9 +290,13 @@
     NSString *pathProFile = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:[NSString stringWithFormat:@"ProImage/%@.%@",_idStr, proImgeFormat]];
     NSString *pathBgFile = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:[NSString stringWithFormat:@"BgImage/%@.%@",_idStr, BgImgeFormat]];
     
+    if (backImage)
+        imageViewPro.image = backImage;
+    else
+     imageViewPro.image = [UIImage imageWithContentsOfFile:pathProFile];
+    
     imageBg = [UIImage imageWithContentsOfFile:pathBgFile];
     imageName = pathBgFile;
-    imageViewPro.image = [UIImage imageWithContentsOfFile:pathProFile];
     
     SubMenuView *subMenuVMid = (SubMenuView*)[AllMenuScrollV viewWithTag:AllMenuScrollV.contentOffset.x/MenuViewWidth + MenuStartTag];
     if (subMenuVMid.years == [[_infoDict objectForKey:@"year"] integerValue])

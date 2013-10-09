@@ -21,7 +21,10 @@
 - (void)loadMenuFromUrl
 {
     //http://lotusprize.com/travel/bundles/eae27d77ca20db309e056e3d2dcd7d69.zip
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlStr] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:120.0f];
+    
+    urlStr = [urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+   // urlStr = [urlStr stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlStr] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0f];
     [request setHTTPMethod:@"GET"];
     
     NSURLConnection *connect = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:YES];
@@ -76,8 +79,6 @@
 {
     NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
     NSString *filePath = [path stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.zip", zipStr]];
-    
-    NSLog(@"%@", filePath);
     
     NSFileManager *fileManager = [NSFileManager defaultManager];
     [fileManager createFileAtPath:filePath contents:backData attributes:nil];

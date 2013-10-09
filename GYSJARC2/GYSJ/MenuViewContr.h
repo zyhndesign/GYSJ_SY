@@ -34,4 +34,5 @@
 - (void)loadCurrentPagePreAfterFive:(int)currentPage count:(int)count;
 - (void)fakeMenuView;/////  假象模式
 - (void)removeFakeMenuView;
+
 @end
