@@ -13,11 +13,15 @@
 #import "UIImageView+Name.h"
 
 
+
 @class ViewController;
 @class MapRuleViewContr;
 @class MenuViewContr;
 @class TimeSViewContr;
 @class FilterMenuViewContr;
+
+
+BOOL ScrollSysncLock; //只允许一个scorllview相应手势
 
 ViewController *RootViewContr;   //
 UIImageView *AllBgImageView;

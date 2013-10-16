@@ -157,9 +157,9 @@
         cell.textLabel.text = [[menuTitleAry lastObject] objectAtIndex:indexPath.row];
     }
     if (currentFilterStr && [currentFilterStr isEqualToString:cell.textLabel.text])
-    {
         cell.textLabel.textColor = LabelBgColor;
-    }
+    else
+        cell.textLabel.textColor = [UIColor blackColor];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.textLabel.font = [UIFont boldSystemFontOfSize:16];
     return cell;

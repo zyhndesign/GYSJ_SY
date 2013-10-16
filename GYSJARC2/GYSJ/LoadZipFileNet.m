@@ -112,10 +112,15 @@
             if (delegate != nil && [delegate respondsToSelector:@selector(didReceiveResult:)])
                 [delegate didReceiveResult:isResult];
         }
+        else
+        {
+            [delegate didReceiveErrorCode:nil];
+        }
     }
     else
     {
         [fileManager removeItemAtPath:filePath error:nil];
+        [delegate didReceiveErrorCode:nil];
     }
     [QueueZipHandle taskFinish];
 }

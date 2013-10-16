@@ -57,6 +57,7 @@
 #define PeopleType 2
 #define CompaynType 3
 
+
 int AllNowYears;   // 今年的年份
 int isOpenMap;    //  判断地图是否开启
 int isScrollAnim; // MenuViewContr中的scroll是否在滑动    在条件刷选和关闭条件更新页面是，isScrollAnim为NO

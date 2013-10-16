@@ -13,8 +13,9 @@
 
 - (void)loadImageFromUrl:(NSString*)imageURLStr
 {
-  //  imageURLStr = [imageURLStr stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    imageURLStr = [imageURLStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    /// 设计的力量两个都要
+//    imageURLStr = [imageURLStr stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+//    imageURLStr = [imageURLStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:imageURLStr] cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:120.0f];
     [request setHTTPMethod:@"GET"];
     

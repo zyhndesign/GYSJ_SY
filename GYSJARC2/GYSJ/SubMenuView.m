@@ -264,16 +264,20 @@ static NSString *beferoImage;
     }
 }
 
-
-- (void)updageBgImage
+static BOOL beforeIsFirstLast;  /// 阻止最后一个和第一个换背景的闪烁，至于为什么，没找到为什么，感觉这样行，结果果真行哦
+- (void)updageBgImage:(BOOL)isFirstLast
 {
     SimpMenuView *simpMview = (SimpMenuView*)[_scrollView viewWithTag:(_scrollView.contentOffset.y/SimpMenuHeigh+1)*10];
+    if (beforeIsFirstLast && isFirstLast)
+    {
+        return;
+    }
+    beforeIsFirstLast = isFirstLast;
     if(simpMview)
     {
         if(simpMview.imageName == nil || simpMview.imageName.length < 1)
         {
-            
-            
+            return;
         }
         else
         {
@@ -291,52 +295,43 @@ static NSString *beferoImage;
                     if ( offsetx >= 1)
                         Tag += offsetx;
                     SubMenuView *subMenuVMid2 = (SubMenuView*)[AllMenuScrollV viewWithTag:Tag];
-                    SimpMenuView *simpMview2 = (SimpMenuView*)[subMenuVMid2._scrollView viewWithTag:(subMenuVMid2._scrollView.contentOffset.y/SimpMenuHeigh+1)*10];
+                    SimpMenuView *simpMview2  = (SimpMenuView*)[subMenuVMid2._scrollView viewWithTag:(subMenuVMid2._scrollView.contentOffset.y/SimpMenuHeigh+1)*10];
                     
                     if(simpMview2.imageName.length > 0)
                     {
-                        if([[AllBgImageView getImageName] isEqualToString:simpMview2.imageName])
+                        if([beferoImage isEqualToString:simpMview2.imageName])
                         {
                             return;
                         }
-                        beferoImage = simpMview2.imageName;
-                        float timess = AllBgImageView.alpha/2.0;
                         
-                        [UIView commitAnimations];
+                        beferoImage = simpMview2.imageName;
+                        float timess = 0.5;//AllBgImageView.alpha/2.0;
                         [UIView animateWithDuration:timess/2 animations:^(void){AllBgImageView.alpha = AllBgImageView.alpha/2;} completion:^(BOOL finish){
                             [UIView animateWithDuration:timess/2 animations:^(void){AllBgImageView.alpha = 0;} completion:^(BOOL finish){
                                 AllBgImageView.image = simpMview2.imageBg;
-                                [AllBgImageView setMyImageName:simpMview2.imageName];
                                 [UIView animateWithDuration:0.1 animations:^(void){AllBgImageView.alpha = 0.2;} completion:^(BOOL finish){
                                     if (isScrollAnim)
                                     {
-                                        [self bgImageDisapper];
-                                        beferoImage = nil;
                                         return ;
                                     }
                                     [UIView animateWithDuration:0.1 animations:^(void){AllBgImageView.alpha = 0.4;} completion:^(BOOL finish){
                                         if (isScrollAnim)
                                         {
-                                            beferoImage = nil;
-                                            [self bgImageDisapper];
                                             return ;
                                         }
                                         [UIView animateWithDuration:0.1 animations:^(void){AllBgImageView.alpha = 0.6;} completion:^(BOOL finish){
                                             if (isScrollAnim)
                                             {
-                                                beferoImage = nil;
-                                                [self bgImageDisapper];
                                                 return ;
                                             }
                                             [UIView animateWithDuration:0.1 animations:^(void){AllBgImageView.alpha = 0.8;} completion:^(BOOL finish){
                                                 if (isScrollAnim)
                                                 {
-                                                    beferoImage = nil;
-                                                    [self bgImageDisapper];
+//                                                    beferoImage = nil;
+//                                                    [self bgImageDisapper];
                                                     return ;
                                                 }
-                                            }];
-                                            [UIView animateWithDuration:0.1 animations:^(void){AllBgImageView.alpha = 1.0; } completion:^(BOOL finish){
+                                                [UIView animateWithDuration:0.1 animations:^(void){AllBgImageView.alpha = 1.0; } completion:^(BOOL finish){
                                                 
                                             }];
                                         }];
@@ -345,8 +340,7 @@ static NSString *beferoImage;
                                 
                             }];
                         }];
-                        
-                        
+                    }];
                     }
                     
                 }
@@ -361,6 +355,7 @@ static int bgTimeCount;
 
 - (void)bgImageDisapper
 {
+    return;
     float times = AllBgImageView.alpha/2;
     [UIView animateWithDuration:times animations:^(void){AllBgImageView.alpha = 0.0; } completion:^(BOOL finish){
         AllBgImageView.image = nil;

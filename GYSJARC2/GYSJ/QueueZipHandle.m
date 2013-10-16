@@ -47,6 +47,7 @@ static NSMutableArray *allTaskAry;
         LoadZipFileNet *zipNet = [array objectAtIndex:i];
         if ([zipNet.urlStr isEqualToString:target.urlStr])
         {
+            zipNet.delegate = target.delegate;
             return YES;
         }
     }

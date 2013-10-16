@@ -250,8 +250,14 @@
     return YES;
 }
 
+- (void)webViewDidStartLoad:(UIWebView *)webView
+{
+    _webView.scrollView.scrollEnabled = NO;
+}
+
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
+    _webView.scrollView.scrollEnabled = YES;
     [activeView stopAnimating];
 }
 

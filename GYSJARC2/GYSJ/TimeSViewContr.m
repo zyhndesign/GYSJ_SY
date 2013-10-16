@@ -134,6 +134,7 @@
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
+    ScrollSysncLock = YES;
     delegateScroll = NO;
     isScrollAnim = 1;
 }
@@ -147,6 +148,7 @@
     else
     {
         isScrollAnim = 0;
+        ScrollSysncLock = NO;
         [delegate TimeViewMoveStop];
         [MenuViewContr scrollStopUpdaBgImage];
         [AllMenuViewContr removeFakeMenuView];
@@ -155,11 +157,12 @@
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
+    ScrollSysncLock = NO;
     if (delegateScroll)
         return; 
     isScrollAnim = 0;
-    [delegate TimeViewMoveStop];
-    [MenuViewContr scrollStopUpdaBgImage];
+    [delegate         TimeViewMoveStop];
+    [MenuViewContr    scrollStopUpdaBgImage];
     [AllMenuViewContr removeFakeMenuView];
 }
 

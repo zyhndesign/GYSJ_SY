@@ -58,7 +58,6 @@
     _filterScrollerV.bounces = YES;
 }
 
-
 ////// 定义submenuview的Tag范围是3000到4000之间  MenuStartTag = 3000
 //////  timeLabel的tag从7000开始   TimeLabelStartTag == 7000
 ////// 假象从Tag 50000开始 
@@ -284,6 +283,8 @@ static int slipAllGap;
 static BOOL touchOver;  // 边界反弹问题， touchover是在手松开后再执行动画，不然在拖的过程中，子视图会左右震动
 - (void)handlePan:(UIPanGestureRecognizer*)recognizer
 {
+    if (ScrollSysncLock)
+        return;
     // 
     delegateScroll = NO;
     CGPoint translation = [recognizer translationInView:self.view];
@@ -306,7 +307,6 @@ static BOOL touchOver;  // 边界反弹问题， touchover是在手松开后再�
     if (recognizer.state == UIGestureRecognizerStateBegan)
     {
         touchOver = NO;
-        isScrollAnim = 1;
         rightSlip = leftSlip = NO;
         if (translation.x > 2)
             leftSlip = YES;
@@ -314,6 +314,7 @@ static BOOL touchOver;  // 边界反弹问题， touchover是在手松开后再�
             rightSlip = YES;
         else;
         slipAllGap = translation.x;
+        isScrollAnim = 1;
         [AllMenuScrollV setContentOffset:CGPointMake(offsetX, 0)];
        // [AllMapRuleViewContr hiddenMapDetail];
     }
@@ -434,23 +435,29 @@ static BOOL touchOver;  // 边界反弹问题， touchover是在手松开后再�
         offsetX = 0;
     if (offsetX > AllMenuScrollV.contentSize.width - MenuViewWidth)
         offsetX = AllMenuScrollV.contentSize.width - MenuViewWidth;
-    
     SubMenuView *subMenuVMid = (SubMenuView*)[AllMenuScrollV viewWithTag:offsetX/MenuViewWidth + MenuStartTag];
     if (subMenuVMid)
     {
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^(void) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^(void) {
             @autoreleasepool {
                 if (!isScrollAnim)
                 {
+                    BOOL isFirstLast = NO;
                     int offsetX2 = AllMenuScrollV.contentOffset.x;
                     if (offsetX2 < 0)
+                    {
                         offsetX2 = 0;
+                        isFirstLast = YES;
+                    }
                     if (offsetX2 > AllMenuScrollV.contentSize.width - MenuViewWidth)
+                    {
                         offsetX2 = AllMenuScrollV.contentSize.width - MenuViewWidth;
+                        isFirstLast = YES;
+                    }
                     SubMenuView *subMenuVMid2 = (SubMenuView*)[AllMenuScrollV viewWithTag:offsetX2/MenuViewWidth + MenuStartTag];
                     
                     [AllTimeSVContr changLabelStatus:subMenuVMid2.years];
-                    [subMenuVMid2 updageBgImage];
+                    [subMenuVMid2 updageBgImage:isFirstLast];
                     [subMenuVMid2 updateMapInfo];
 //                    SimpMenuView *simpMview = (SimpMenuView*)[subMenuVMid2._scrollView viewWithTag:(subMenuVMid2._scrollView.contentOffset.y/SimpMenuHeigh+1)*10];
 //                    

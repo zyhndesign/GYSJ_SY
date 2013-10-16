@@ -23,7 +23,7 @@
 - (void)moveStartStatus;
 - (void)updateMapInfo;
 - (void)builtView;
-- (void)updageBgImage;
+- (void)updageBgImage:(BOOL)isFirstLast;
 //+ (void)updageBgImage:(UIImage *)newImage imageName:(NSString*)imageName; //// 更改背景图
 - (BOOL)updatePageIndiView;
 - (void)initBgImage;
