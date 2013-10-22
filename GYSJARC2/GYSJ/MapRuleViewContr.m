@@ -36,9 +36,9 @@ UIView *AllDrawLineView;
     
     //  contentView.hidden = YES;
     [scrllView setContentSize:CGSizeMake(1400, 704)];
- //   scrllView.scrollEnabled = NO;
-//    mbXMapview = [[MBXMapView alloc] initWithFrame:CGRectMake(0, 0, 1400, 704) mapID:@"zyhndesign.map-sthen0lx"];
-//    [scrllView addSubview:mbXMapview];
+    scrllView.scrollEnabled = NO;
+    mbXMapview = [[MBXMapView alloc] initWithFrame:CGRectMake(0, 0, 1400, 704) mapID:@"zyhndesign.map-sthen0lx"];
+    [scrllView addSubview:mbXMapview];
     
     
     self.view.layer.shadowOffset = CGSizeMake(0, 0);
@@ -159,13 +159,13 @@ UIView *AllDrawLineView;
 
 - (void)moveContentView
 {
-//    CLLocationCoordinate2D location2d;
-//    location2d.latitude  = (double)((int)pointX%90);
-//    location2d.longitude = (double)((int)pointY%90);
-//    [mbXMapview  setCenterCoordinate:location2d animated:NO];
-//    [contentView setCenter:CGPointMake(400, 200)];
-//    [contentView setFrame:CGRectMake((int)pointX%180, (int)pointY%90, contentView.frame.size.width, contentView.frame.size.height)];
-//    return;
+    CLLocationCoordinate2D location2d;
+    location2d.latitude  = (double)((int)pointX%90);
+    location2d.longitude = (double)((int)pointY%90);
+    [mbXMapview  setCenterCoordinate:location2d animated:NO];
+    [contentView setCenter:CGPointMake(400, 200)];
+    [contentView setFrame:CGRectMake((int)pointX%180, (int)pointY%90, contentView.frame.size.width, contentView.frame.size.height)];
+    return;
     
     float positionX = pointX - 46;
     float positionY = pointY - 94;
