@@ -420,10 +420,6 @@ static NSString *const kTrackingId = @"UA-41833465-3";
 
 - (void)didReceiveErrorCode:(NSError*)Error
 {
-    if (Error != nil && [Error code] == -1009)
-    {
-        [self alertView:@"网络连接失败，请检查网络设置。"];
-    }
     [LocalSQL openDataBase];
     [AllInfoArray removeAllObjects];
     [AllInfoArray addObjectsFromArray:[LocalSQL getAll]];

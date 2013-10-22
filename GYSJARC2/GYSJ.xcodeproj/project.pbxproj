@@ -92,6 +92,9 @@
 		D39942A617D9EA5C00751E52 /* btn_close_popwin_yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = D39942A517D9EA5B00751E52 /* btn_close_popwin_yellow.png */; };
 		D3A28A6217BBB5E500188841 /* MoviePlayViewContr.m in Sources */ = {isa = PBXBuildFile; fileRef = D3A28A6017BBB5E500188841 /* MoviePlayViewContr.m */; };
 		D3A28A6317BBB5E500188841 /* MoviePlayViewContr.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3A28A6117BBB5E500188841 /* MoviePlayViewContr.xib */; };
+		D3AF2C87181120D7008B522D /* MBXMapKit.m in Sources */ = {isa = PBXBuildFile; fileRef = D3AF2C86181120D7008B522D /* MBXMapKit.m */; };
+		D3AF2C88181120F5008B522D /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3AF2C7F18111734008B522D /* MapKit.framework */; };
+		D3AF2C8A18112282008B522D /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3AF2C8918112282008B522D /* CoreLocation.framework */; };
 		D3B15C6B17DED192005DC092 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = D3B15C6A17DED192005DC092 /* Reachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D3EB0EE517DF503C00A30843 /* BriefImageV.m in Sources */ = {isa = PBXBuildFile; fileRef = D3EB0EE417DF503C00A30843 /* BriefImageV.m */; };
 		D3EC1FF917CB81EC00F534A4 /* filter_tab_company_gray.png in Resources */ = {isa = PBXBuildFile; fileRef = D3EC1FF317CB81EC00F534A4 /* filter_tab_company_gray.png */; };
@@ -235,6 +238,10 @@
 		D3A28A5F17BBB5E500188841 /* MoviePlayViewContr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoviePlayViewContr.h; sourceTree = "<group>"; };
 		D3A28A6017BBB5E500188841 /* MoviePlayViewContr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoviePlayViewContr.m; sourceTree = "<group>"; };
 		D3A28A6117BBB5E500188841 /* MoviePlayViewContr.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MoviePlayViewContr.xib; sourceTree = "<group>"; };
+		D3AF2C7F18111734008B522D /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		D3AF2C85181120D7008B522D /* MBXMapKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBXMapKit.h; sourceTree = "<group>"; };
+		D3AF2C86181120D7008B522D /* MBXMapKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBXMapKit.m; sourceTree = "<group>"; };
+		D3AF2C8918112282008B522D /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		D3B15C6917DED192005DC092 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		D3B15C6A17DED192005DC092 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		D3DBE2C417A679BE006D86DF /* TimeChangeDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TimeChangeDelegate.h; sourceTree = "<group>"; };
@@ -259,6 +266,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3AF2C8A18112282008B522D /* CoreLocation.framework in Frameworks */,
+				D3AF2C88181120F5008B522D /* MapKit.framework in Frameworks */,
 				D347BC9017DD6A6100B90ACB /* SystemConfiguration.framework in Frameworks */,
 				D347BC8E17DD6A5900B90ACB /* CoreData.framework in Frameworks */,
 				D30F96DA17BB907700C1E284 /* MediaPlayer.framework in Frameworks */,
@@ -341,6 +350,8 @@
 		D3833ECB179E110C0097D6A2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D3AF2C8918112282008B522D /* CoreLocation.framework */,
+				D3AF2C7F18111734008B522D /* MapKit.framework */,
 				D30F96D917BB907700C1E284 /* MediaPlayer.framework */,
 				D36AEC6B17A621AC00D096B2 /* QuartzCore.framework */,
 				D3833F40179E6D290097D6A2 /* libz.dylib */,
@@ -381,6 +392,8 @@
 		D3833EFC179E1FC90097D6A2 /* Function */ = {
 			isa = PBXGroup;
 			children = (
+				D3AF2C85181120D7008B522D /* MBXMapKit.h */,
+				D3AF2C86181120D7008B522D /* MBXMapKit.m */,
 				D38E239B17D72CA6007FCD8C /* AllVarible.h */,
 				D3DBE2C417A679BE006D86DF /* TimeChangeDelegate.h */,
 				D3833EFD179E21FE0097D6A2 /* TimeSViewContr.h */,
@@ -690,6 +703,7 @@
 				D3833EE6179E110D0097D6A2 /* ViewController.m in Sources */,
 				D3833F22179E6A270097D6A2 /* ZipArchive.mm in Sources */,
 				D3833F00179E21FE0097D6A2 /* TimeSViewContr.m in Sources */,
+				D3AF2C87181120D7008B522D /* MBXMapKit.m in Sources */,
 				D3833F0E179E2E7A0097D6A2 /* MenuViewContr.m in Sources */,
 				D3833F13179E35B10097D6A2 /* ContentViewContr.m in Sources */,
 				D3833F3C179E6B610097D6A2 /* ioapi.c in Sources */,
@@ -754,8 +768,8 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: ShenZhen Bobo Network Technology Co.,Ltd";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: ShenZhen Bobo Network Technology Co.,Ltd";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Xiang Yuan (K4R4QQ2GC5)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Xiang Yuan (K4R4QQ2GC5)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -770,8 +784,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "2D25A5A5-EDF4-489E-9841-EC64AFF19EC7";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "2D25A5A5-EDF4-489E-9841-EC64AFF19EC7";
+				PROVISIONING_PROFILE = "89A76033-B6FC-41C9-8071-38AEAC2FB634";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "89A76033-B6FC-41C9-8071-38AEAC2FB634";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
 			};
@@ -788,8 +802,8 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: ShenZhen Bobo Network Technology Co.,Ltd";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: ShenZhen Bobo Network Technology Co.,Ltd";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Xiang Yuan (K4R4QQ2GC5)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Xiang Yuan (K4R4QQ2GC5)";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -797,8 +811,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "2D25A5A5-EDF4-489E-9841-EC64AFF19EC7";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "2D25A5A5-EDF4-489E-9841-EC64AFF19EC7";
+				PROVISIONING_PROFILE = "89A76033-B6FC-41C9-8071-38AEAC2FB634";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "89A76033-B6FC-41C9-8071-38AEAC2FB634";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
 				VALIDATE_PRODUCT = YES;

@@ -55,6 +55,7 @@
     _webView.scrollView.showsVerticalScrollIndicator   = YES;
     _webView.scrollView.showsHorizontalScrollIndicator = NO;
     _webView.scrollView.scrollsToTop = NO;
+    _webView.scrollView.scrollEnabled = NO;
     NSString *doctPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)  lastObject];
     NSString *documentPath = [doctPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@", [initDict objectForKey:@"id"]]];
     BOOL dirBOOL = YES;

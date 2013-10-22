@@ -10,13 +10,14 @@
 #import "TimeChangeDelegate.h"
 #import "BriefImageV.h"
 @class SimpMenuView;
-
+@class MBXMapView;
 @interface MapRuleViewContr : UIViewController
 {
     IBOutlet UIImageView *__weak bgImageV;
     IBOutlet UIScrollView *scrllView;
     
     IBOutlet UIView *contentView;
+    IBOutlet UIView *mapView;
     IBOutlet UILabel *titleLabel;
     IBOutlet UITextView *detailTextV;
     IBOutlet BriefImageV *briefImageV;
@@ -24,6 +25,7 @@
     float pointX;
     float pointY;
     SimpMenuView *_simpleMenuV;
+    MBXMapView *mbXMapview;
 }
 
 @property(nonatomic, weak)IBOutlet UIImageView *bgImageV;
