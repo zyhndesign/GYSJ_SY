@@ -9,9 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "TimeChangeDelegate.h"
 #import "BriefImageV.h"
+#import "MBXMapKit.h"
+#import "JPSThumbnailAnnotation.h"
+
 @class SimpMenuView;
-@class MBXMapView;
-@interface MapRuleViewContr : UIViewController
+
+@interface MapRuleViewContr : UIViewController<MKMapViewDelegate>
 {
     IBOutlet UIImageView *__weak bgImageV;
     IBOutlet UIScrollView *scrllView;
@@ -22,10 +25,14 @@
     IBOutlet UITextView *detailTextV;
     IBOutlet BriefImageV *briefImageV;
     
+    JPSThumbnailAnnotation *jpsThumbnailAnnt;
+    
     float pointX;
     float pointY;
     SimpMenuView *_simpleMenuV;
     MBXMapView *mbXMapview;
+    
+    NSMutableData *backData;
 }
 
 @property(nonatomic, weak)IBOutlet UIImageView *bgImageV;
@@ -34,4 +41,5 @@
 - (void)showMapDetail:(SimpMenuView*)simpleMenuV;
 - (void)hiddenMapDetail;
 - (void)updateMapImage;
+- (void)contentShow;
 @end

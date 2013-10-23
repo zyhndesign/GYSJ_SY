@@ -8,8 +8,7 @@
 #import "SubMenuView.h"
 #import "AllVarible.h"
 #import "ContentViewContr.h"
-
-#import "MBXMapKit.h"
+#import "JSONKit.h"
 
 UIView *AllDrawLineView;
 
@@ -34,12 +33,13 @@ UIView *AllDrawLineView;
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(contentShow)];
     [contentView addGestureRecognizer:tapGesture];
     
-    //  contentView.hidden = YES;
-    [scrllView setContentSize:CGSizeMake(1400, 704)];
     scrllView.scrollEnabled = NO;
-    mbXMapview = [[MBXMapView alloc] initWithFrame:CGRectMake(0, 0, 1400, 704) mapID:@"zyhndesign.map-sthen0lx"];
+    mbXMapview = [[MBXMapView alloc] initWithFrame:CGRectMake(0, 0, 340, 704) mapID:@"zyhndesign.map-sthen0lx"];
+    mbXMapview.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+    [self generateAnnotations];
+    [mbXMapview addAnnotations:[NSArray arrayWithObjects:jpsThumbnailAnnt, nil]];
+    mbXMapview.delegate = self;
     [scrllView addSubview:mbXMapview];
-    
     
     self.view.layer.shadowOffset = CGSizeMake(0, 0);
     self.view.layer.shadowRadius = 2;
@@ -112,33 +112,46 @@ UIView *AllDrawLineView;
     }
 }
 
-
-
-////  47 94 原点的在contentview上的中心位置
-
 - (void)showMapDetail:(SimpMenuView*)simpleMenuV
 {
-
     _simpleMenuV = simpleMenuV;
-    NSString *coordStr = [simpleMenuV._infoDict objectForKey:@"coordinate"];
-    NSArray *coordAry  = [coordStr componentsSeparatedByString:@","];
-    if (coordAry.count == 2)
+    
+    if ([[_simpleMenuV._infoDict objectForKey:@"city"] length] == 0)
     {
-        pointX = [[coordAry objectAtIndex:0] floatValue];
-        pointY = [[coordAry lastObject] floatValue];
+        jpsThumbnailAnnt.view.hidden = YES;
+        return ;
     }
-    if (pointX < 0 || pointY < 0)
-    {
-        contentView.hidden = YES;
-        return;
-    }
+    jpsThumbnailAnnt.view.hidden = NO;
+    NSString *googleUrlStr = [NSString stringWithFormat:@"http://maps.googleapis.com/maps/api/geocode/json?address=%@&sensor=false", [_simpleMenuV._infoDict objectForKey:@"city"]];
+    googleUrlStr = [googleUrlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:googleUrlStr] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:5.0f];
+    NSURLConnection *connect = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:YES];
+    if (connect)
+        backData = [[NSMutableData alloc] init];
+    else
+        backData = nil;
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
+{
+    [backData appendData:data];
+}
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection
+{
+    NSDictionary *backDict = [backData objectFromJSONDataWithParseOptions:JKParseOptionValidFlags error:nil];
+    NSDictionary *posDict = [[[[backDict objectForKey:@"results"] lastObject] objectForKey:@"geometry"] objectForKey:@"location"];
+    NSLog(@"%@", posDict);
+    CLLocationCoordinate2D location2d;
+    location2d.latitude  = [[posDict objectForKey:@"lat"] doubleValue];
+    location2d.longitude = [[posDict objectForKey:@"lng"] doubleValue];
     
-    contentView.hidden = NO;
+    jpsThumbnailAnnt.thumbnail.coordinate = location2d;
     
-    titleLabel.text    = [simpleMenuV._infoDict objectForKey:@"city"];
-    detailTextV.text   = [simpleMenuV._infoDict objectForKey:@"name"];
+    [jpsThumbnailAnnt annotationViewInMap:mbXMapview];
     
-    [self moveContentView];
+    jpsThumbnailAnnt.view.titleLabel.text  = [_simpleMenuV._infoDict objectForKey:@"name"];
+    jpsThumbnailAnnt.view.subtitleLabel.text = [_simpleMenuV._infoDict objectForKey:@"city"];
     
     NSString *proUrlStr = [_simpleMenuV._infoDict objectForKey:@"profile"];
     NSString *proImgeFormat = [[proUrlStr componentsSeparatedByString:@"."] lastObject];
@@ -147,39 +160,58 @@ UIView *AllDrawLineView;
     NSFileManager *fileManage = [NSFileManager defaultManager];
     if ([fileManage fileExistsAtPath:pathFile])
     {
-        briefImageV.image = nil;
-        briefImageV.image = [UIImage imageWithContentsOfFile:pathFile];
+        jpsThumbnailAnnt.view.imageView.image = nil;
+        jpsThumbnailAnnt.view.imageView.image = [UIImage imageWithContentsOfFile:pathFile];
     }
     else
     {
-        briefImageV.image = nil;
-        briefImageV.image = [UIImage imageNamed:@"default_event_poster.png"];
+        jpsThumbnailAnnt.view.imageView.image = nil;
+        jpsThumbnailAnnt.view.imageView.image = [UIImage imageNamed:@"default_event_poster.png"];
     }
-}
-
-- (void)moveContentView
-{
-    CLLocationCoordinate2D location2d;
-    location2d.latitude  = (double)((int)pointX%90);
-    location2d.longitude = (double)((int)pointY%90);
-    [mbXMapview  setCenterCoordinate:location2d animated:NO];
-    [contentView setCenter:CGPointMake(400, 200)];
-    [contentView setFrame:CGRectMake((int)pointX%180, (int)pointY%90, contentView.frame.size.width, contentView.frame.size.height)];
-    return;
     
-    float positionX = pointX - 46;
-    float positionY = pointY - 94;
-    [contentView setFrame:CGRectMake(positionX, positionY, contentView.frame.size.width, contentView.frame.size.height)];
-    if (positionX - 100 > 0 && positionX < 1400 - 360)
-        [scrllView setContentOffset:CGPointMake(positionX - 100, 0) animated:YES];
-    else if(positionX >= 1400 - 360)
-        [scrllView setContentOffset:CGPointMake(1400 - 360, 0) animated:YES];
-    else
-        [scrllView setContentOffset:CGPointZero animated:YES];
+    [mbXMapview setCenterCoordinate:location2d animated:YES];
+    contentView.hidden = YES;
 }
 
 - (void)hiddenMapDetail
 {
     contentView.hidden = YES;
+}
+
+#pragma mark MapKit
+
+- (void)generateAnnotations
+{
+    // Empire State Building
+    JPSThumbnail *empire = [[JPSThumbnail alloc] init];
+    empire.image = [UIImage imageNamed:@"empire.jpg"];
+    empire.title = @"Empire State Building";
+    empire.subtitle = @"NYC Landmark";
+    empire.coordinate = CLLocationCoordinate2DMake(40.75, -73.99);
+    empire.disclosureBlock = ^{ [self contentShow]; };
+    
+    jpsThumbnailAnnt = [[JPSThumbnailAnnotation alloc] initWithThumbnail:empire];
+  
+}
+
+#pragma mark - MKMapViewDelegate
+
+- (void)mapView:(MKMapView *)mapview didSelectAnnotationView:(MKAnnotationView *)view {
+    if ([view conformsToProtocol:@protocol(JPSThumbnailAnnotationViewProtocol)]) {
+        [((NSObject<JPSThumbnailAnnotationViewProtocol> *)view) didSelectAnnotationViewInMap:mapview];
+    }
+}
+
+- (void)mapView:(MKMapView *)mapview didDeselectAnnotationView:(MKAnnotationView *)view {
+    if ([view conformsToProtocol:@protocol(JPSThumbnailAnnotationViewProtocol)]) {
+        [((NSObject<JPSThumbnailAnnotationViewProtocol> *)view) didDeselectAnnotationViewInMap:mapview];
+    }
+}
+
+- (MKAnnotationView *)mapView:(MKMapView *)mapview viewForAnnotation:(id<MKAnnotation>)annotation {
+    if ([annotation conformsToProtocol:@protocol(JPSThumbnailAnnotationProtocol)]) {
+        return [((NSObject<JPSThumbnailAnnotationProtocol> *)annotation) annotationViewInMap:mapview];
+    }
+    return nil;
 }
 @end
