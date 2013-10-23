@@ -42,8 +42,8 @@ __strong sqlite3 *dataBase;
 
 + (BOOL)createLocalTable
 {
-//    NSString *sqlStr = [NSString stringWithFormat:@"create table if not exists myTable(id char primary key,name char,md5 char, timestamp char, url char,city char,coordinate char,genre char, summary char,year char, artists char, organizations char, postDate char,background char,profile char)"];
-     NSString *sqlStr = [NSString stringWithFormat:@"create table if not exists myTable(id char,name char,md5 char, timestamp char, url char,city char,coordinate char,genre char, summary char,year char, artists char, organizations char, postDate char,background char,profile char)"];
+    NSString *sqlStr = [NSString stringWithFormat:@"create table if not exists myTable(id char primary key,name char,md5 char, timestamp char, url char,city char,coordinate char,genre char, summary char,year char, artists char, organizations char, postDate char,background char,profile char)"];
+   //  NSString *sqlStr = [NSString stringWithFormat:@"create table if not exists myTable(id char,name char,md5 char, timestamp char, url char,city char,coordinate char,genre char, summary char,year char, artists char, organizations char, postDate char,background char,profile char)"];
     sqlite3_stmt *stmt;
     if (sqlite3_prepare_v2(dataBase, [sqlStr UTF8String], -1, &stmt, 0) != SQLITE_OK)
     {
@@ -595,12 +595,6 @@ __strong sqlite3 *dataBase;
     NSString *sqlStr = nil;
     if ([LocalSQL getIsExistDataFromID:idStr])
     {
-        //// testsunyong
-        int year = arc4random()%200;
-        year += [yearStr intValue];
-        if (year > maxYear)
-            year = 1770 + arc4random()%240;
-        yearStr = [NSString stringWithFormat:@"%d", year];
 
         if (![profileStr isEqualToString:[LocalSQL getProImageUrl:idStr]])
         {
@@ -624,9 +618,6 @@ __strong sqlite3 *dataBase;
     {
         sqlStr = [NSString stringWithFormat:@"insert into mytable values('%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@', '%@', '%@', '%@')", idStr,nameStr, md5Str, timestamp, urlStr, cityStr, coordStr, genreStr, summaryStr, yearStr, artistStr, organStr, postDateS, backgroundStr, profileStr];
     }
-    
-    /// testsunyong
-    sqlStr = [NSString stringWithFormat:@"insert into mytable values('%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@', '%@', '%@', '%@')", idStr,nameStr, md5Str, timestamp, urlStr, cityStr, coordStr, genreStr, summaryStr, yearStr, artistStr, organStr, postDateS, backgroundStr, profileStr];
     sqlite3_stmt *stmt;
     if (sqlite3_prepare_v2(dataBase, [sqlStr UTF8String], -1, &stmt, 0) != SQLITE_OK)
     {
