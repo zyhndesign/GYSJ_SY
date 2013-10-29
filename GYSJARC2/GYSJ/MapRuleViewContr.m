@@ -34,12 +34,8 @@ UIView *AllDrawLineView;
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(contentShow)];
     [contentView addGestureRecognizer:tapGesture];
     
-    //  contentView.hidden = YES;
+    contentView.hidden = YES;
     [scrllView setContentSize:CGSizeMake(1400, 704)];
- //   scrllView.scrollEnabled = NO;
-//    mbXMapview = [[MBXMapView alloc] initWithFrame:CGRectMake(0, 0, 1400, 704) mapID:@"zyhndesign.map-sthen0lx"];
-//    [scrllView addSubview:mbXMapview];
-    
     
     self.view.layer.shadowOffset = CGSizeMake(0, 0);
     self.view.layer.shadowRadius = 2;
@@ -48,7 +44,6 @@ UIView *AllDrawLineView;
     titleLabel.textColor  = LabelBgColor;
     detailTextV.textColor = LabelBgColor;
 
-    
     [super viewDidLoad];
 }
 
@@ -159,16 +154,8 @@ UIView *AllDrawLineView;
 
 - (void)moveContentView
 {
-//    CLLocationCoordinate2D location2d;
-//    location2d.latitude  = (double)((int)pointX%90);
-//    location2d.longitude = (double)((int)pointY%90);
-//    [mbXMapview  setCenterCoordinate:location2d animated:NO];
-//    [contentView setCenter:CGPointMake(400, 200)];
-//    [contentView setFrame:CGRectMake((int)pointX%180, (int)pointY%90, contentView.frame.size.width, contentView.frame.size.height)];
-//    return;
-    
-    float positionX = pointX - 46;
-    float positionY = pointY - 94;
+    float positionX = pointX - 45;
+    float positionY = pointY - 93;
     [contentView setFrame:CGRectMake(positionX, positionY, contentView.frame.size.width, contentView.frame.size.height)];
     if (positionX - 100 > 0 && positionX < 1400 - 360)
         [scrllView setContentOffset:CGPointMake(positionX - 100, 0) animated:YES];

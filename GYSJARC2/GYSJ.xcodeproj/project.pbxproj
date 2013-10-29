@@ -164,6 +164,7 @@
 		D3AF2C88181120F5008B522D /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3AF2C7F18111734008B522D /* MapKit.framework */; };
 		D3AF2C8A18112282008B522D /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3AF2C8918112282008B522D /* CoreLocation.framework */; };
 		D3B15C6B17DED192005DC092 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = D3B15C6A17DED192005DC092 /* Reachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		D3D5FADF181F8D370034C841 /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D3D5FADE181F8D370034C841 /* logo@2x.png */; };
 		D3EB0EE517DF503C00A30843 /* BriefImageV.m in Sources */ = {isa = PBXBuildFile; fileRef = D3EB0EE417DF503C00A30843 /* BriefImageV.m */; };
 		D3F366E817AB9A6200EE6FF6 /* LoadZipFileNet.m in Sources */ = {isa = PBXBuildFile; fileRef = D3F366E717AB9A6200EE6FF6 /* LoadZipFileNet.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		D3F836AC17E410D80098AE4B /* launch.png in Resources */ = {isa = PBXBuildFile; fileRef = D3F836AB17E410D80098AE4B /* launch.png */; };
@@ -372,6 +373,7 @@
 		D3AF2C8918112282008B522D /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		D3B15C6917DED192005DC092 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		D3B15C6A17DED192005DC092 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		D3D5FADE181F8D370034C841 /* logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo@2x.png"; sourceTree = "<group>"; };
 		D3DBE2C417A679BE006D86DF /* TimeChangeDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TimeChangeDelegate.h; sourceTree = "<group>"; };
 		D3EB0EE317DF503C00A30843 /* BriefImageV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BriefImageV.h; sourceTree = "<group>"; };
 		D3EB0EE417DF503C00A30843 /* BriefImageV.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BriefImageV.m; sourceTree = "<group>"; };
@@ -681,6 +683,7 @@
 				D39E011E181A21450019F964 /* btn_info_gray@2x.png */,
 				D39E011F181A21450019F964 /* Filter */,
 				D39E0131181A21450019F964 /* logo.png */,
+				D3D5FADE181F8D370034C841 /* logo@2x.png */,
 				D39E0132181A21450019F964 /* mapRule */,
 				D39E013F181A21450019F964 /* menu */,
 				D39E0150181A21450019F964 /* time */,
@@ -860,6 +863,7 @@
 				D3255FBD17A7637900F63897 /* MapRuleViewContr.xib in Resources */,
 				D39E0163181A21450019F964 /* btn_filter_gray.png in Resources */,
 				D3255FDB17A79F3400F63897 /* FilterMenuViewContr.xib in Resources */,
+				D3D5FADF181F8D370034C841 /* logo@2x.png in Resources */,
 				D3A28A6317BBB5E500188841 /* MoviePlayViewContr.xib in Resources */,
 				D39E0181181A21450019F964 /* icon_date_gray.png in Resources */,
 				D39E015B181A21450019F964 /* btn_close_popwin_yellow.png in Resources */,

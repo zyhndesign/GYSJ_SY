@@ -17,7 +17,6 @@
     IBOutlet UIScrollView *scrllView;
     
     IBOutlet UIView *contentView;
-    IBOutlet UIView *mapView;
     IBOutlet UILabel *titleLabel;
     IBOutlet UITextView *detailTextV;
     IBOutlet BriefImageV *briefImageV;
