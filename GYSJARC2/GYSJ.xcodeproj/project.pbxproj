@@ -122,7 +122,7 @@
 		D39E016E181A21450019F964 /* filter_tab_people_gold@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D39E012D181A21450019F964 /* filter_tab_people_gold@2x.png */; };
 		D39E016F181A21450019F964 /* filter_tab_people_gray.png in Resources */ = {isa = PBXBuildFile; fileRef = D39E012E181A21450019F964 /* filter_tab_people_gray.png */; };
 		D39E0170181A21450019F964 /* filter_tab_people_gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D39E012F181A21450019F964 /* filter_tab_people_gray@2x.png */; };
-		D39E0171181A21450019F964 /* launch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D39E0130181A21450019F964 /* launch@2x.png */; };
+		D39E0171181A21450019F964 /* bg_default@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D39E0130181A21450019F964 /* bg_default@2x.jpg */; };
 		D39E0172181A21450019F964 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = D39E0131181A21450019F964 /* logo.png */; };
 		D39E0173181A21450019F964 /* btn_map_gold.png in Resources */ = {isa = PBXBuildFile; fileRef = D39E0133181A21450019F964 /* btn_map_gold.png */; };
 		D39E0174181A21450019F964 /* btn_map_gold@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D39E0134181A21450019F964 /* btn_map_gold@2x.png */; };
@@ -327,7 +327,7 @@
 		D39E012D181A21450019F964 /* filter_tab_people_gold@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "filter_tab_people_gold@2x.png"; sourceTree = "<group>"; };
 		D39E012E181A21450019F964 /* filter_tab_people_gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = filter_tab_people_gray.png; sourceTree = "<group>"; };
 		D39E012F181A21450019F964 /* filter_tab_people_gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "filter_tab_people_gray@2x.png"; sourceTree = "<group>"; };
-		D39E0130181A21450019F964 /* launch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "launch@2x.png"; sourceTree = "<group>"; };
+		D39E0130181A21450019F964 /* bg_default@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "bg_default@2x.jpg"; sourceTree = "<group>"; };
 		D39E0131181A21450019F964 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		D39E0133181A21450019F964 /* btn_map_gold.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_map_gold.png; sourceTree = "<group>"; };
 		D39E0134181A21450019F964 /* btn_map_gold@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_map_gold@2x.png"; sourceTree = "<group>"; };
@@ -669,6 +669,7 @@
 			isa = PBXGroup;
 			children = (
 				D39E0115181A21450019F964 /* bg_default.jpg */,
+				D39E0130181A21450019F964 /* bg_default@2x.jpg */,
 				D39E0116181A21450019F964 /* bg_shadow.png */,
 				D39E0117181A21450019F964 /* btn_close_popwin_dark.png */,
 				D39E0118181A21450019F964 /* btn_close_popwin_dark@2x.png */,
@@ -679,7 +680,6 @@
 				D39E011D181A21450019F964 /* btn_info_gray.png */,
 				D39E011E181A21450019F964 /* btn_info_gray@2x.png */,
 				D39E011F181A21450019F964 /* Filter */,
-				D39E0130181A21450019F964 /* launch@2x.png */,
 				D39E0131181A21450019F964 /* logo.png */,
 				D39E0132181A21450019F964 /* mapRule */,
 				D39E013F181A21450019F964 /* menu */,
@@ -902,7 +902,7 @@
 				D39E0170181A21450019F964 /* filter_tab_people_gray@2x.png in Resources */,
 				D347BCA917DDA68000B90ACB /* ImageViewShowContr.xib in Resources */,
 				D39E0169181A21450019F964 /* filter_tab_genre_gold.png in Resources */,
-				D39E0171181A21450019F964 /* launch@2x.png in Resources */,
+				D39E0171181A21450019F964 /* bg_default@2x.jpg in Resources */,
 				D39E0158181A21450019F964 /* bg_shadow.png in Resources */,
 				D39E017A181A21450019F964 /* map_bubble_bg@2x.png in Resources */,
 				D34BC02F18179F5200E4C19C /* white_dot_full@2x.png in Resources */,
@@ -1018,8 +1018,8 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Xiang Yuan (K4R4QQ2GC5)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Xiang Yuan (K4R4QQ2GC5)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: ShenZhen Bobo Network Technology Co.,Ltd";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: ShenZhen Bobo Network Technology Co.,Ltd";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1034,8 +1034,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "89A76033-B6FC-41C9-8071-38AEAC2FB634";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "89A76033-B6FC-41C9-8071-38AEAC2FB634";
+				PROVISIONING_PROFILE = "2D25A5A5-EDF4-489E-9841-EC64AFF19EC7";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "2D25A5A5-EDF4-489E-9841-EC64AFF19EC7";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
 			};
@@ -1052,8 +1052,8 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Xiang Yuan (K4R4QQ2GC5)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Xiang Yuan (K4R4QQ2GC5)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: ShenZhen Bobo Network Technology Co.,Ltd";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: ShenZhen Bobo Network Technology Co.,Ltd";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -1061,8 +1061,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "89A76033-B6FC-41C9-8071-38AEAC2FB634";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "89A76033-B6FC-41C9-8071-38AEAC2FB634";
+				PROVISIONING_PROFILE = "2D25A5A5-EDF4-489E-9841-EC64AFF19EC7";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "2D25A5A5-EDF4-489E-9841-EC64AFF19EC7";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
 				VALIDATE_PRODUCT = YES;
@@ -1073,8 +1073,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Xiang Yuan (K4R4QQ2GC5)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Xiang Yuan (K4R4QQ2GC5)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: ShenZhen Bobo Network Technology Co.,Ltd";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: ShenZhen Bobo Network Technology Co.,Ltd";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GYSJ/GYSJ-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -1087,8 +1087,8 @@
 					"\"$(SRCROOT)/GYSJ/LibraryAnaly\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "89A76033-B6FC-41C9-8071-38AEAC2FB634";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "89A76033-B6FC-41C9-8071-38AEAC2FB634";
+				PROVISIONING_PROFILE = "2D25A5A5-EDF4-489E-9841-EC64AFF19EC7";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "2D25A5A5-EDF4-489E-9841-EC64AFF19EC7";
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
@@ -1099,8 +1099,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Xiang Yuan (K4R4QQ2GC5)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Xiang Yuan (K4R4QQ2GC5)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: ShenZhen Bobo Network Technology Co.,Ltd";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: ShenZhen Bobo Network Technology Co.,Ltd";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GYSJ/GYSJ-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -1113,8 +1113,8 @@
 					"\"$(SRCROOT)/GYSJ/LibraryAnaly\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "89A76033-B6FC-41C9-8071-38AEAC2FB634";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "89A76033-B6FC-41C9-8071-38AEAC2FB634";
+				PROVISIONING_PROFILE = "2D25A5A5-EDF4-489E-9841-EC64AFF19EC7";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "2D25A5A5-EDF4-489E-9841-EC64AFF19EC7";
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
