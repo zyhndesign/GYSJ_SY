@@ -32,6 +32,8 @@
 
 - (void)viewDidLoad
 {
+    scalePram = 1.0f;
+    
     UIImage *_maskImage = [UIImage imageNamed:@"timeline_mask"];
     CALayer *_makkLayer = [CALayer layer];
     _makkLayer.frame = CGRectMake(155, 20, 868, 90);
@@ -45,6 +47,7 @@
     [_scrollView setContentSize:CGSizeMake((AllNowYears - StartYear)*GapYear + 1024, _scrollView.frame.size.height)];
     _scrollView.scrollEnabled = YES;
     _scrollView.bounces = YES;
+    _scrollView.multipleTouchEnabled = NO;
     [_scrollView setDecelerationRate:0.7f];
     [self addLowwerLabel];
     [self addTimeLabel];
@@ -53,8 +56,12 @@
     
     [self changLabelStatus:years];
     
+    UIPinchGestureRecognizer *pinchGestureRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handlePinch:)];
+    [self.view addGestureRecognizer:pinchGestureRecognizer];
+    
 }
 
+//  lowwerLabel的Tag小于1000
 - (void)addLowwerLabel
 {
     int j = 0;
@@ -62,13 +69,16 @@
     {
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(StartX + j*GapX, StartLowY-LabelHeigh, 1, LabelHeigh)];
         label.backgroundColor = LabelBgColor;
+        label.tag = j+1;
         [_scrollView addSubview:label];
     }
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(StartX + j*GapX, StartLowY-LabelHeigh, 1, LabelHeigh)];
     label.backgroundColor = LabelBgColor;
+    label.tag = j+1;
     [_scrollView addSubview:label];
 }
 
+//timeLabel的Tag 大于1770 小于2100
 - (void)addTimeLabel
 {
     int startYear = StartYear + 1;
@@ -79,26 +89,88 @@
         label.textColor = LabelBgColor;
         label.backgroundColor = [UIColor clearColor];
         label.text = [NSString stringWithFormat:@"%d", startYear];
+        label.tag  = startYear;
         label.textAlignment = NSTextAlignmentCenter;
         label.font = [UIFont systemFontOfSize:14];
         [_scrollView addSubview:label];
         startYear += 10;
     }
-    
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(i-20, StartLowY-LabelHeigh-20, 40, 20)];
-    label.textColor = LabelBgColor;
-    label.backgroundColor = [UIColor clearColor];
-    label.text = [NSString stringWithFormat:@"%d", startYear];
-    label.textAlignment = NSTextAlignmentCenter;
-    label.font = [UIFont systemFontOfSize:14];
-    [_scrollView addSubview:label];
 }
 
 #pragma mark - scorllview delegate
 /// 滑动menuview
+#define MaxScale 1
+#define MinScale 0.5
+static float beforeScale;
+static float currentScorllCenter;
+- (void) handlePinch:(UIPinchGestureRecognizer*) recognizer
+{
+    if (recognizer.state == UIGestureRecognizerStateBegan)
+    {
+        currentScorllCenter = (_scrollView.contentOffset.x + 512)/scalePram;
+        beforeScale = recognizer.scale - 1;
+        scalePram += (recognizer.scale-1);
+        isScaling = YES;
+    }
+    else
+    {
+        scalePram -= beforeScale;
+        scalePram += (recognizer.scale-1);
+        beforeScale = recognizer.scale-1;
+    }
+    if (scalePram > 1)
+        scalePram = 1;
+    if (scalePram < 0.5)
+        scalePram = 0.5;
+    float currentGap = scalePram*GapX;
+    for(UIView *view in [_scrollView subviews])
+    {
+        int TTag = view.tag;
+        if(TTag > 0 && TTag < StartYear) /// 竖条
+        {
+            [view setFrame:CGRectMake(StartX + (TTag-1)*currentGap, 99, 1, 10)];
+        }
+        else if(TTag < StartYear*10 && TTag >= StartYear) /// 字
+        {
+            [view setFrame:CGRectMake(StartX + (TTag-StartYear)/10*currentGap - 20, view.frame.origin.y, view.frame.size.width, view.frame.size.height)];
+        }
+        else if(TTag >= StartYear*10)  /// 点
+        {
+            int years = TTag/10;
+            [view setFrame:CGRectMake(StartX + (years - (StartYear + 1))*GapYear*scalePram - 5*scalePram, view.frame.origin.y, 14*scalePram, 14*scalePram)];
+        }
+        else ;
+    }
+    [_scrollView setContentSize:CGSizeMake((AllNowYears - StartYear)*GapYear*scalePram + 1024, _scrollView.frame.size.height)];
+    [_scrollView setContentOffset:CGPointMake(scalePram*currentScorllCenter - 512, 0)];
+    if (recognizer.state == UIGestureRecognizerStateEnded || recognizer.state == UIGestureRecognizerStateCancelled || recognizer.state == UIGestureRecognizerStateFailed)
+    {
+        if ([timeLabel.text isEqualToString:@"革命前"])
+        {
+            
+        }
+        else
+        {
+//            int years = [timeLabel.text intValue];
+//            float yearStartPointx = (years - StartYear)*GapYear*scalePram;
+//            
+//            yearStartPointx += (1-scalePram)*2*GapX/20;
+//            
+//            if (yearStartPointx < 0)
+//                yearStartPointx = 0;
+//            if (yearStartPointx > AllTimeScrolV.contentSize.width - GapYear*scalePram)
+//                yearStartPointx = AllMenuScrollV.contentSize.width - GapYear*scalePram;
+//            [_scrollView setContentOffset:CGPointMake(yearStartPointx , 0)];
+        }
+        isScaling = NO;
+    }
+  //  NSLog(@"捏合, %f", scalePram);
+}
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
+    if (isScaling)
+        return;
     if (delegateScroll)
     {
         if (scrollView.contentOffset.x < 0)
@@ -107,7 +179,7 @@
     }
     
     isScrollAnim = 1;
-    int years = StartYear + scrollView.contentOffset.x/GapYear;
+    int years = StartYear + scrollView.contentOffset.x/(scalePram*GapYear);
     
     if (years >= maxYear )
     {
@@ -188,12 +260,15 @@
 //    int years = subMenuVMid.years;
     int years = [((UILabel*)[AllMenuScrollV viewWithTag:(posX/MenuViewWidth + TimeLabelStartTag)]).text intValue];
    // NSLog(@"Border-----%d", years);
-    int yearStartPointx = (years - StartYear)*GapYear;
+    float yearStartPointx = (years - StartYear)*GapYear*scalePram;
+  
+    yearStartPointx += (1-scalePram)*2*GapX/20;
+  
     delegateScroll = YES;
     if (yearStartPointx < 0)
         yearStartPointx = 0;
-    if (yearStartPointx > AllTimeScrolV.contentSize.width - GapYear)
-        yearStartPointx = AllMenuScrollV.contentSize.width - GapYear;
+    if (yearStartPointx > AllTimeScrolV.contentSize.width - GapYear*scalePram)
+        yearStartPointx = AllMenuScrollV.contentSize.width - GapYear*scalePram;
     [_scrollView setContentOffset:CGPointMake(yearStartPointx, 0) animated:YES];
 }
 
@@ -205,12 +280,15 @@
         offSx = AllMenuScrollV.contentSize.width - MenuViewWidth;
     else;
     int years = [((UILabel*)[AllMenuScrollV viewWithTag:(offSx/MenuViewWidth + TimeLabelStartTag)]).text intValue];
-    int yearStartPointx = (years - StartYear)*GapYear;
+    float yearStartPointx = (years - StartYear)*GapYear*scalePram;
+
+    yearStartPointx += (1-scalePram)*2*GapX/20;
+   
     delegateScroll = YES;
     if (yearStartPointx < 0)
         yearStartPointx = 0;
-    if (yearStartPointx > AllTimeScrolV.contentSize.width - GapYear)
-        yearStartPointx = AllMenuScrollV.contentSize.width - GapYear;
+    if (yearStartPointx > AllTimeScrolV.contentSize.width - GapYear*scalePram)
+        yearStartPointx = AllMenuScrollV.contentSize.width - GapYear*scalePram;
     [_scrollView setContentOffset:CGPointMake(yearStartPointx , 0) animated:YES];
     [self changLabelStatus:years];
 }
@@ -218,14 +296,17 @@
 
 - (void)menuviewMoveStop:(int)years
 {
-    int yearStartPointx = (years - StartYear)*GapYear;
+    float yearStartPointx = (years - StartYear)*GapYear*scalePram;
+    
+    yearStartPointx += (1-scalePram)*2*GapX/20;
+   
     delegateScroll = YES;
     [_scrollView setContentOffset:CGPointMake(yearStartPointx, 0) animated:YES];
 }
 
 - (int)calculateYears:(int)offsetX
 {
-    return (StartYear + offsetX/GapYear);
+    return (StartYear + offsetX/(GapYear*scalePram));
 }
 
 ///// 改变label数据
@@ -253,6 +334,7 @@
 {
     [super didReceiveMemoryWarning];
 }
+
 - (void)rebuildEventView:(NSArray*)eventAry
 {
     for(UIView *view in [AllTimeScrolV subviews])
@@ -280,7 +362,7 @@
         {
             UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"event_dot_bg.png"]];
             imageView.tag = years*10 + j;
-            [imageView setFrame:CGRectMake(StartX + (years - (StartYear + 1))*GapYear - 5, StartTopY + j*14 - j*5, 14, 14)];
+            [imageView setFrame:CGRectMake(StartX + (years - (StartYear + 1))*GapYear*scalePram - 5, StartTopY + j*14 - j*5, 14, 14)];
             [AllTimeScrolV addSubview:imageView];
             imageView = nil;
         }

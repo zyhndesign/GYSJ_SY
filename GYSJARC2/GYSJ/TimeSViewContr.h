@@ -16,6 +16,9 @@
     IBOutlet UILabel *timeLabel;
     IBOutlet UIView *maskView;
     BOOL delegateScroll;/////delegate滑动scrollview
+    
+    float scalePram;
+    BOOL isScaling;
 }
 @property(nonatomic, weak)id<TimeChangeDelegate>delegate;
 @property(nonatomic, assign)BOOL delegateScroll;
