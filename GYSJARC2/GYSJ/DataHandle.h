@@ -12,4 +12,5 @@
 
 + (NSMutableArray*)DHdeleteRepeatFromAry:(NSArray*)initArray;
 + (void)sortArray:(NSMutableArray *)initArray indexUniqueID:(NSMutableArray*)uniqueID;
++ (int)backTimePositionScrolCurrentYear:(int)year;
 @end

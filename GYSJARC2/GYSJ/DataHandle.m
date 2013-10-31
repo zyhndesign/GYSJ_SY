@@ -8,6 +8,7 @@
 
 #import "DataHandle.h"
 #import "pinyin.h"
+#import "AllVarible.h"
 
 @implementation DataHandle
 
@@ -75,6 +76,17 @@
             }
         }
     }
+}
+
++ (int)backTimePositionScrolCurrentYear:(int)year
+{
+    for (int i = 1; i < AllInfoArray.count ; i++)
+    {
+        int years = [[[[AllInfoArray objectAtIndex:i] objectAtIndex:0] objectForKey:@"year"] intValue];
+        if (years > year)
+            return i-1;
+    }
+    return 0;
 }
 
 + (char)hanziFirstLetter:(NSString*)stringX

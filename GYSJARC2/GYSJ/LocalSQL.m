@@ -66,7 +66,6 @@ __strong sqlite3 *dataBase;
     sqlite3_stmt *stmt;
     if (sqlite3_prepare_v2(dataBase, [sqlStr UTF8String], -1, &stmt, 0) == SQLITE_OK)
     {
-        
         while (sqlite3_step(stmt) == SQLITE_ROW)
         {
             NSMutableArray *tempAry = [NSMutableArray array];
