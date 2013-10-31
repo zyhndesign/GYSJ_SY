@@ -100,6 +100,7 @@
 #define MinScale 0.5
 static float beforeScale;
 static float currentScorllCenter;
+
 - (void) handlePinch:(UIPinchGestureRecognizer*) recognizer
 {
     if (AllFilterMenuVCtr.currentFilterStr.length > 0)  /// fitler Mode
@@ -113,74 +114,114 @@ static float currentScorllCenter;
     }
     else if (recognizer.state == UIGestureRecognizerStateEnded || recognizer.state == UIGestureRecognizerStateCancelled || recognizer.state == UIGestureRecognizerStateFailed)
     {
-        if (scalePram > 1)
-            scalePram = 1;
+        if (scalePram > 1.5)
+            scalePram = 1.5;
         if (scalePram < 0.5)
             scalePram = 0.5;
         float currentGap = scalePram*GapX;
-        [UIView animateWithDuration:0.5
-                         animations:^(void){
-                             for(UIView *view in [_scrollView subviews])
-                             {
-                                 int TTag = view.tag;
-                                 if(TTag > 0 && TTag < StartYear) /// 竖条
+        if (scalePram*currentScorllCenter - 512 < 0)
+        {
+            [UIView animateWithDuration:0.5
+                             animations:^(void){
+                                 for(UIView *view in [_scrollView subviews])
                                  {
-                                     [view setFrame:CGRectMake(StartX + (TTag-1)*currentGap, 99, 1, 10)];
-                                 }
-                                 else if(TTag < StartYear*10 && TTag >= StartYear) /// 字
-                                 {
-                                     [view setFrame:CGRectMake(StartX + (TTag-StartYear)/10*currentGap - 20, view.frame.origin.y, view.frame.size.width, view.frame.size.height)];
-                                 }
-                                 else if(TTag >= StartYear*10)  /// 点
-                                 {
-                                     int years = TTag/10;
-                                     if (scalePram > 1)
+                                     int TTag = view.tag;
+                                     if(TTag > 0 && TTag < StartYear) /// 竖条
                                      {
-                                         [view setFrame:CGRectMake(StartX + (years - (StartYear + 1))*GapYear*scalePram - 5*scalePram, view.frame.origin.y, 14, 14)];
+                                         [view setFrame:CGRectMake(StartX + (TTag-1)*currentGap, 99, 1, 10)];
                                      }
-                                     else
+                                     else if(TTag < StartYear*10 && TTag >= StartYear) /// 字
                                      {
-                                         [view setFrame:CGRectMake(StartX + (years - (StartYear + 1))*GapYear*scalePram - 5*scalePram, view.frame.origin.y, 14*scalePram, 14*scalePram)];
+                                         [view setFrame:CGRectMake(StartX + (TTag-StartYear)/10*currentGap - 20, view.frame.origin.y, view.frame.size.width, view.frame.size.height)];
                                      }
+                                     else if(TTag >= StartYear*10)  /// 点
+                                     {
+                                         int years = TTag/10;
+                                         if (scalePram > 1)
+                                         {
+                                             [view setFrame:CGRectMake(StartX + (years - (StartYear + 1))*GapYear*scalePram - 5*scalePram, view.frame.origin.y, 14, 14)];
+                                         }
+                                         else
+                                         {
+                                             [view setFrame:CGRectMake(StartX + (years - (StartYear + 1))*GapYear*scalePram - 5*scalePram, view.frame.origin.y, 14*scalePram, 14*scalePram)];
+                                         }
+                                     }
+                                     else ;
+                                     [_scrollView setContentSize:CGSizeMake((AllNowYears - StartYear)*GapYear*scalePram + 1024, _scrollView.frame.size.height)];
+                                     [_scrollView setContentOffset:CGPointMake(0, 0)];
                                  }
-                                 else ;
-                                 [_scrollView setContentOffset:CGPointMake(scalePram*currentScorllCenter - 512, 0)];
                              }
-                         }
-                         completion:^(BOOL finish){
-                             [_scrollView setContentSize:CGSizeMake((AllNowYears - StartYear)*GapYear*scalePram + 1024, _scrollView.frame.size.height)];
-                             int offsetx = scalePram*currentScorllCenter - 512;
-                             int year = StartYear;
-                             int beforeYear = StartYear;
-                             if (![timeLabel.text isEqualToString:@"革命前"])
-                                 beforeYear = timeLabel.text.intValue;
-            
-                             if (offsetx < 0)
-                             {
-                                 [_scrollView setContentOffset:CGPointMake(0, 0)];
+                             completion:^(BOOL finish){
+                                 [delegate TimeViewArriveYear:StartYear];
+                                 isScaling = NO;
+                             }];
+        }
+        else
+        {
+            [UIView animateWithDuration:0.5
+                             animations:^(void){
+                                 for(UIView *view in [_scrollView subviews])
+                                 {
+                                     int TTag = view.tag;
+                                     if(TTag > 0 && TTag < StartYear) /// 竖条
+                                     {
+                                         [view setFrame:CGRectMake(StartX + (TTag-1)*currentGap, 99, 1, 10)];
+                                     }
+                                     else if(TTag < StartYear*10 && TTag >= StartYear) /// 字
+                                     {
+                                         [view setFrame:CGRectMake(StartX + (TTag-StartYear)/10*currentGap - 20, view.frame.origin.y, view.frame.size.width, view.frame.size.height)];
+                                     }
+                                     else if(TTag >= StartYear*10)  /// 点
+                                     {
+                                         int years = TTag/10;
+                                         if (scalePram > 1)
+                                         {
+                                             [view setFrame:CGRectMake(StartX + (years - (StartYear + 1))*GapYear*scalePram - 5*scalePram, view.frame.origin.y, 14, 14)];
+                                         }
+                                         else
+                                         {
+                                             [view setFrame:CGRectMake(StartX + (years - (StartYear + 1))*GapYear*scalePram - 5*scalePram, view.frame.origin.y, 14*scalePram, 14*scalePram)];
+                                         }
+                                     }
+                                     else ;
+                                     [_scrollView setContentOffset:CGPointMake(scalePram*currentScorllCenter - 512, 0)];
+                                 }
                              }
-                             else if (offsetx > (AllNowYears - StartYear)*GapYear*scalePram)
-                             {
-                                 [_scrollView setContentOffset:CGPointMake((AllNowYears - StartYear)*GapYear*scalePram, 0)];
-                                 year = maxYear;
-                             }
-                             else
-                             {
-                                 year = offsetx/(GapYear*scalePram) + StartYear;
-                             }
-                             int timePos = [DataHandle backTimePositionScrolCurrentYear:year];
-                             int currentYearPos = [[AllMenuPosition_YearDict objectForKey:[NSString stringWithFormat:@"%d", beforeYear]] intValue];
-                             int posGap = currentYearPos - timePos;
-                             if (posGap >= -1 && posGap <= 1)
-                             {
-                                 
-                             }
-                             else
-                             {
-                                 [delegate TimeViewArriveYear:[[AllMenuYear_PositionDict objectForKey:[NSString stringWithFormat:@"%d", timePos]] intValue]];
-                             }
-                             isScaling = NO;
-                         }];
+                             completion:^(BOOL finish){
+                                 [_scrollView setContentSize:CGSizeMake((AllNowYears - StartYear)*GapYear*scalePram + 1024, _scrollView.frame.size.height)];
+                                 int offsetx = scalePram*currentScorllCenter - 512;
+                                 int year = StartYear;
+                                 int beforeYear = StartYear;
+                                 if (![timeLabel.text isEqualToString:@"革命前"])
+                                     beforeYear = timeLabel.text.intValue;
+                
+                                 if (offsetx < 0)
+                                 {
+                                     [_scrollView setContentOffset:CGPointMake(0, 0)];
+                                 }
+                                 else if (offsetx > (AllNowYears - StartYear)*GapYear*scalePram)
+                                 {
+                                     [_scrollView setContentOffset:CGPointMake((AllNowYears - StartYear)*GapYear*scalePram, 0)];
+                                     year = maxYear;
+                                 }
+                                 else
+                                 {
+                                     year = offsetx/(GapYear*scalePram) + StartYear;
+                                 }
+                                 int timePos = [DataHandle backTimePositionScrolCurrentYear:year];
+                                 int currentYearPos = [[AllMenuPosition_YearDict objectForKey:[NSString stringWithFormat:@"%d", beforeYear]] intValue];
+                                 int posGap = currentYearPos - timePos;
+                                 if (posGap >= -1 && posGap <= 1)
+                                 {
+                                     
+                                 }
+                                 else
+                                 {
+                                    [delegate TimeViewArriveYear:[[AllMenuYear_PositionDict objectForKey:[NSString stringWithFormat:@"%d", timePos]] intValue]];
+                                 }
+                                 isScaling = NO;
+                             }];
+        }
         return;
     }
     else

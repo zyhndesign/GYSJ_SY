@@ -86,7 +86,7 @@
         if (years > year)
             return i-1;
     }
-    return 0;
+    return AllInfoArray.count-1;
 }
 
 + (char)hanziFirstLetter:(NSString*)stringX
