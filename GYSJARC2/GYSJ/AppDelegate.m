@@ -85,12 +85,12 @@
 
 - (void)didReceiveErrorCode:(NSError*)Error
 {
-//    if ([Error code] == -1009)
-//    {
+    if ([Error code] == -1009)
+    {
 //        UIAlertView *alerView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"网络数据连接失败，请检查网络设置。" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
 //        [alerView show];
 //        [alerView release];
-//    }
+    }
 }
 
 
