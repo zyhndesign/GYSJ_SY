@@ -14,13 +14,13 @@
 
 - (void)loadMenuFromUrl
 {
-//    //// 192.168.1.18  ///lotusprize.com
+//    //// 192.168.1.18  ///lotusprize.com comdesignlab.com
     NSString *urlStr = nil;
     NSString *timestampLast = [[NSUserDefaults standardUserDefaults] objectForKey:@"timestamp"];
     if (timestampLast.length > 0)
-        urlStr = [NSString stringWithFormat:@"http://lotusprize.com/hid/dataUpdate.json?lastUpdateDate=%@", timestampLast];
+        urlStr = [NSString stringWithFormat:@"http://comdesignlab.com/hid/dataUpdate.json?lastUpdateDate=%@", timestampLast];
     else
-        urlStr = [NSString stringWithFormat:@"http://lotusprize.com/hid/dataUpdate.json?lastUpdateDate=0"];
+        urlStr = [NSString stringWithFormat:@"http://comdesignlab.com/hid/dataUpdate.json?lastUpdateDate=0"];
     //urlStr = [NSString stringWithFormat:@"http://lotusprize.com/hid/dataUpdate.json?lastUpdateDate=0"];
    // urlStr = [NSString stringWithFormat:@"http://192.168.1.18/hid/dataUpdate.json?lastUpdateDate=0"];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlStr] cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData timeoutInterval:10.0f];
@@ -60,6 +60,7 @@
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
     NSDictionary *backDict = [backData objectFromJSONDataWithParseOptions:JKParseOptionValidFlags error:nil];
+    NSLog(@"==%@", backDict);
     [delegate didReceiveData:backDict];
 }
 

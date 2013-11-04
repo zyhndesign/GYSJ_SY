@@ -250,7 +250,15 @@
     if ([fileManage fileExistsAtPath:pathProFile])
     {
         isProImage = YES;
-        imageViewPro.image = [UIImage imageWithContentsOfFile:pathProFile];
+        UIImage *image = [UIImage imageWithContentsOfFile:pathProFile];
+        if (image)
+        {
+            imageViewPro.image = image;
+        }
+        else
+        {
+            imageViewPro.image = [UIImage imageNamed:@"default_event_poster.png"];
+        }
     }
     else
     {
@@ -293,7 +301,13 @@
     if (backImage)
         imageViewPro.image = backImage;
     else
-     imageViewPro.image = [UIImage imageWithContentsOfFile:pathProFile];
+    {
+        UIImage *image = [UIImage imageWithContentsOfFile:pathProFile];
+        if (image)
+        {
+            imageViewPro.image = image;
+        }
+    }
     
     imageBg = [UIImage imageWithContentsOfFile:pathBgFile];
     imageName = pathBgFile;
