@@ -10,8 +10,8 @@
 #import "GetVersion.h"
 
 @class ViewController;
-//@class TAGManager;
-//@class TAGContainer;
+@class TAGManager;
+@class TAGContainer;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate, NetworkDelegate>
 

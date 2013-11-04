@@ -12,10 +12,10 @@
 #import "MapRuleViewContr.h"
 #import "FilterMenuViewContr.h"
 #import "NetworkDelegate.h"
-//#import "GAITrackedViewController.h"
-//#import "GAI.h"
+#import "GAITrackedViewController.h"
+#import "GAI.h"
 
-@interface ViewController : UIViewController<NetworkDelegate, FilterChangeDelegate, UIAlertViewDelegate>
+@interface ViewController : GAITrackedViewController<NetworkDelegate, FilterChangeDelegate, UIAlertViewDelegate>
 {
     IBOutlet UIView *timeSelectView;
     IBOutlet UIView *menuView;

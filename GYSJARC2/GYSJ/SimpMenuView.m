@@ -302,11 +302,8 @@
         imageViewPro.image = backImage;
     else
     {
-        UIImage *image = [UIImage imageWithContentsOfFile:pathProFile];
-        if (image)
-        {
-            imageViewPro.image = image;
-        }
+        [[NSFileManager defaultManager] removeItemAtPath:pathProFile error:nil];
+        imageViewPro.image = [UIImage imageNamed:@"default_event_poster.png"];
     }
     
     imageBg = [UIImage imageWithContentsOfFile:pathBgFile];

@@ -154,6 +154,7 @@ static float currentScorllCenter;
                              completion:^(BOOL finish){
                                  [delegate TimeViewArriveYear:StartYear];
                                  isScaling = NO;
+                                 [AllMenuViewContr removeFakeMenuView];
                              }];
         }
         else
@@ -219,6 +220,7 @@ static float currentScorllCenter;
                                  {
                                     [delegate TimeViewArriveYear:[[AllMenuYear_PositionDict objectForKey:[NSString stringWithFormat:@"%d", timePos]] intValue]];
                                  }
+                                 [AllMenuViewContr removeFakeMenuView];
                                  isScaling = NO;
                              }];
         }

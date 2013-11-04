@@ -12,13 +12,13 @@
 #import "SimpMenuView.h"
 #import "AllVarible.h"
 #import "Reachability.h"
-
 #import "NetworkDelegate.h"
 
+#import "GAI.h"
 
 /******* Set your tracking ID here *******/
 
-
+// UA-44083057-2
 
 @implementation AppDelegate
 
@@ -134,8 +134,8 @@
 static NSString *const kAllowTracking = @"allowTracking";
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-//   [GAI sharedInstance].optOut =
-//    ![[NSUserDefaults standardUserDefaults] boolForKey:kAllowTracking];
+   [GAI sharedInstance].optOut =
+    ![[NSUserDefaults standardUserDefaults] boolForKey:kAllowTracking];
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
 

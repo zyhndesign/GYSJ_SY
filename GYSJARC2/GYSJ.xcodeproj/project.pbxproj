@@ -165,6 +165,7 @@
 		D3AF2C8A18112282008B522D /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3AF2C8918112282008B522D /* CoreLocation.framework */; };
 		D3B15C6B17DED192005DC092 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = D3B15C6A17DED192005DC092 /* Reachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D3D5FADF181F8D370034C841 /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D3D5FADE181F8D370034C841 /* logo@2x.png */; };
+		D3D779971827A0AC001E2ACF /* libGoogleAnalytics_debug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D3D779961827A0AC001E2ACF /* libGoogleAnalytics_debug.a */; };
 		D3EB0EE517DF503C00A30843 /* BriefImageV.m in Sources */ = {isa = PBXBuildFile; fileRef = D3EB0EE417DF503C00A30843 /* BriefImageV.m */; };
 		D3F366E817AB9A6200EE6FF6 /* LoadZipFileNet.m in Sources */ = {isa = PBXBuildFile; fileRef = D3F366E717AB9A6200EE6FF6 /* LoadZipFileNet.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		D3F836AC17E410D80098AE4B /* launch.png in Resources */ = {isa = PBXBuildFile; fileRef = D3F836AB17E410D80098AE4B /* launch.png */; };
@@ -374,6 +375,13 @@
 		D3B15C6917DED192005DC092 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		D3B15C6A17DED192005DC092 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		D3D5FADE181F8D370034C841 /* logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo@2x.png"; sourceTree = "<group>"; };
+		D3D779901827A0AC001E2ACF /* GAI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAI.h; sourceTree = "<group>"; };
+		D3D779911827A0AC001E2ACF /* GAIDictionaryBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIDictionaryBuilder.h; sourceTree = "<group>"; };
+		D3D779921827A0AC001E2ACF /* GAIFields.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIFields.h; sourceTree = "<group>"; };
+		D3D779931827A0AC001E2ACF /* GAILogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAILogger.h; sourceTree = "<group>"; };
+		D3D779941827A0AC001E2ACF /* GAITrackedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITrackedViewController.h; sourceTree = "<group>"; };
+		D3D779951827A0AC001E2ACF /* GAITracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITracker.h; sourceTree = "<group>"; };
+		D3D779961827A0AC001E2ACF /* libGoogleAnalytics_debug.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAnalytics_debug.a; sourceTree = "<group>"; };
 		D3DBE2C417A679BE006D86DF /* TimeChangeDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TimeChangeDelegate.h; sourceTree = "<group>"; };
 		D3EB0EE317DF503C00A30843 /* BriefImageV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BriefImageV.h; sourceTree = "<group>"; };
 		D3EB0EE417DF503C00A30843 /* BriefImageV.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BriefImageV.m; sourceTree = "<group>"; };
@@ -392,6 +400,7 @@
 				D3AF2C8A18112282008B522D /* CoreLocation.framework in Frameworks */,
 				D3AF2C88181120F5008B522D /* MapKit.framework in Frameworks */,
 				D347BC9017DD6A6100B90ACB /* SystemConfiguration.framework in Frameworks */,
+				D3D779971827A0AC001E2ACF /* libGoogleAnalytics_debug.a in Frameworks */,
 				D347BC8E17DD6A5900B90ACB /* CoreData.framework in Frameworks */,
 				D30F96DA17BB907700C1E284 /* MediaPlayer.framework in Frameworks */,
 				D36AEC6C17A621AC00D096B2 /* QuartzCore.framework in Frameworks */,
@@ -597,10 +606,10 @@
 		D3833F56179E7D0C0097D6A2 /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				D3833EE5179E110D0097D6A2 /* ViewController.m */,
 				D3833EDB179E110D0097D6A2 /* AppDelegate.h */,
 				D3833EDC179E110D0097D6A2 /* AppDelegate.m */,
 				D3833EE4179E110D0097D6A2 /* ViewController.h */,
+				D3833EE5179E110D0097D6A2 /* ViewController.m */,
 				D38C833617CC5FFD00080620 /* ViewController.xib */,
 			);
 			name = Main;
@@ -640,6 +649,7 @@
 		D3833F62179E86CF0097D6A2 /* DataHandle */ = {
 			isa = PBXGroup;
 			children = (
+				D3D7798F1827A0AC001E2ACF /* LibraryAnaly */,
 				D3833F69179E90E40097D6A2 /* Database */,
 				D3833F42179E7CEC0097D6A2 /* Json */,
 				D3833F1F179E6A190097D6A2 /* Zip */,
@@ -767,6 +777,20 @@
 				D39E0156181A21450019F964 /* timeline_mask@2x.png */,
 			);
 			path = time;
+			sourceTree = "<group>";
+		};
+		D3D7798F1827A0AC001E2ACF /* LibraryAnaly */ = {
+			isa = PBXGroup;
+			children = (
+				D3D779901827A0AC001E2ACF /* GAI.h */,
+				D3D779911827A0AC001E2ACF /* GAIDictionaryBuilder.h */,
+				D3D779921827A0AC001E2ACF /* GAIFields.h */,
+				D3D779931827A0AC001E2ACF /* GAILogger.h */,
+				D3D779941827A0AC001E2ACF /* GAITrackedViewController.h */,
+				D3D779951827A0AC001E2ACF /* GAITracker.h */,
+				D3D779961827A0AC001E2ACF /* libGoogleAnalytics_debug.a */,
+			);
+			path = LibraryAnaly;
 			sourceTree = "<group>";
 		};
 		D3F5450517AA6F970017521B /* SimpleMenu */ = {
@@ -1022,8 +1046,8 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: ShenZhen Bobo Network Technology Co.,Ltd";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: ShenZhen Bobo Network Technology Co.,Ltd";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Xiang Yuan (K4R4QQ2GC5)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Xiang Yuan (K4R4QQ2GC5)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1038,8 +1062,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "2D25A5A5-EDF4-489E-9841-EC64AFF19EC7";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "2D25A5A5-EDF4-489E-9841-EC64AFF19EC7";
+				PROVISIONING_PROFILE = "89A76033-B6FC-41C9-8071-38AEAC2FB634";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "89A76033-B6FC-41C9-8071-38AEAC2FB634";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
 			};
@@ -1056,8 +1080,8 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: ShenZhen Bobo Network Technology Co.,Ltd";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: ShenZhen Bobo Network Technology Co.,Ltd";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Xiang Yuan (K4R4QQ2GC5)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Xiang Yuan (K4R4QQ2GC5)";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -1065,8 +1089,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "2D25A5A5-EDF4-489E-9841-EC64AFF19EC7";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "2D25A5A5-EDF4-489E-9841-EC64AFF19EC7";
+				PROVISIONING_PROFILE = "89A76033-B6FC-41C9-8071-38AEAC2FB634";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "89A76033-B6FC-41C9-8071-38AEAC2FB634";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
 				VALIDATE_PRODUCT = YES;
@@ -1077,8 +1101,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: ShenZhen Bobo Network Technology Co.,Ltd";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: ShenZhen Bobo Network Technology Co.,Ltd";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Xiang Yuan (K4R4QQ2GC5)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Xiang Yuan (K4R4QQ2GC5)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GYSJ/GYSJ-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -1086,13 +1110,14 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/LibraryAnaly\"",
-					"\"$(SRCROOT)/Library\"",
-					"\"$(SRCROOT)/GYSJ/LibraryAnaly\"",
+					"\\\"$(SRCROOT)/LibraryAnaly\\\"",
+					"\\\"$(SRCROOT)/Library\\\"",
+					"\\\"$(SRCROOT)/GYSJ/LibraryAnaly\\\"",
+					"/Users/sunyong/Desktop/company/中意/GYSJ_SY/GYSJARC2/GYSJ/LibraryAnaly",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "2D25A5A5-EDF4-489E-9841-EC64AFF19EC7";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "2D25A5A5-EDF4-489E-9841-EC64AFF19EC7";
+				PROVISIONING_PROFILE = "89A76033-B6FC-41C9-8071-38AEAC2FB634";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "89A76033-B6FC-41C9-8071-38AEAC2FB634";
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
@@ -1103,8 +1128,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: ShenZhen Bobo Network Technology Co.,Ltd";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: ShenZhen Bobo Network Technology Co.,Ltd";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Xiang Yuan (K4R4QQ2GC5)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Xiang Yuan (K4R4QQ2GC5)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GYSJ/GYSJ-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -1112,13 +1137,14 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/LibraryAnaly\"",
-					"\"$(SRCROOT)/Library\"",
-					"\"$(SRCROOT)/GYSJ/LibraryAnaly\"",
+					"\\\"$(SRCROOT)/LibraryAnaly\\\"",
+					"\\\"$(SRCROOT)/Library\\\"",
+					"\\\"$(SRCROOT)/GYSJ/LibraryAnaly\\\"",
+					"/Users/sunyong/Desktop/company/中意/GYSJ_SY/GYSJARC2/GYSJ/LibraryAnaly",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "2D25A5A5-EDF4-489E-9841-EC64AFF19EC7";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "2D25A5A5-EDF4-489E-9841-EC64AFF19EC7";
+				PROVISIONING_PROFILE = "89A76033-B6FC-41C9-8071-38AEAC2FB634";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "89A76033-B6FC-41C9-8071-38AEAC2FB634";
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
