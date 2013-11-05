@@ -40,6 +40,7 @@
 
 - (void)viewDidLoad
 {
+    self.trackedViewName = @"content";
     [super viewDidLoad];
     
     infoDict = [[NSMutableDictionary alloc] init];

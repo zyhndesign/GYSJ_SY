@@ -9,10 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "NetworkDelegate.h"
 #import "LoadZipFileNet.h"
+#import "GAI.h"
 
 @class SimpMenuView;
 
-@interface ContentViewContr : UIViewController<UIWebViewDelegate, NSStreamDelegate, NSXMLParserDelegate, NetworkDelegate>
+@interface ContentViewContr : GAITrackedViewController<UIWebViewDelegate, NSStreamDelegate, NSXMLParserDelegate, NetworkDelegate>
 {
     IBOutlet UIActivityIndicatorView *activeView;
     IBOutlet UIWebView *_webView;

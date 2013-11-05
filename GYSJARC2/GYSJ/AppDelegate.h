@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "GetVersion.h"
+#import "GAI.h"
 
 @class ViewController;
 @class TAGManager;
@@ -19,7 +20,7 @@
 
 @property (strong, nonatomic) ViewController *viewController;
 
-
+@property(nonatomic, strong) id<GAITracker> tracker;
 
 
 @end

@@ -154,7 +154,7 @@ static float currentScorllCenter;
                              completion:^(BOOL finish){
                                  [delegate TimeViewArriveYear:StartYear];
                                  isScaling = NO;
-                                 [AllMenuViewContr removeFakeMenuView];
+                                 [AllMenuViewContr performSelector:@selector(removeFakeMenuView) withObject:nil afterDelay:0.2f];
                              }];
         }
         else
@@ -220,7 +220,8 @@ static float currentScorllCenter;
                                  {
                                     [delegate TimeViewArriveYear:[[AllMenuYear_PositionDict objectForKey:[NSString stringWithFormat:@"%d", timePos]] intValue]];
                                  }
-                                 [AllMenuViewContr removeFakeMenuView];
+                                 
+                                 [AllMenuViewContr performSelector:@selector(removeFakeMenuView) withObject:nil afterDelay:0.3f];
                                  isScaling = NO;
                              }];
         }
@@ -232,7 +233,7 @@ static float currentScorllCenter;
         scalePram += (recognizer.scale-1);
         beforeScale = recognizer.scale-1;
     }
-
+    
     scalePram = scalePram < 0.2?0.2:scalePram;
     
     float currentGap = scalePram*GapX;
