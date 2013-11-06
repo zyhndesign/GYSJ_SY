@@ -59,7 +59,7 @@
     else
     {
         connectNum++;
-        NSLog(@"zip error:%d",connectNum);
+       // NSLog(@"zip error:%d",connectNum);
         [self loadMenuFromUrl];
     }
     
