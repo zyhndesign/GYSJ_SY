@@ -21,6 +21,23 @@
 			<true/>
 		</dict>
 	</dict>
+	<key>CFBundleIcons~ipad</key>
+	<dict>
+		<key>CFBundlePrimaryIcon</key>
+		<dict>
+			<key>CFBundleIconFiles</key>
+			<array>
+				<string>icon-29</string>
+				<string>icon-40</string>
+				<string>icon-50</string>
+				<string>icon-76</string>
+				<string>icon-72@2x.png</string>
+				<string>icon-72.png</string>
+			</array>
+			<key>UIPrerenderedIcon</key>
+			<true/>
+		</dict>
+	</dict>
 	<key>CFBundleIdentifier</key>
 	<string>com.zyhndesign.GYSJ</string>
 	<key>CFBundleInfoDictionaryVersion</key>
