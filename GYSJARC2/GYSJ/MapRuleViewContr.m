@@ -9,8 +9,6 @@
 #import "AllVarible.h"
 #import "ContentViewContr.h"
 
-#import "MBXMapKit.h"
-
 UIView *AllDrawLineView;
 
 @interface MapRuleViewContr ()
