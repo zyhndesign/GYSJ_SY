@@ -15,7 +15,6 @@
 
 @interface ContentViewContr : GAITrackedViewController<UIWebViewDelegate, NSStreamDelegate, NSXMLParserDelegate, NetworkDelegate>
 {
-    IBOutlet UIActivityIndicatorView *activeView;
     IBOutlet UIWebView *_webView;
     NSDictionary *initDict;
     NSMutableDictionary *infoDict;
@@ -24,8 +23,10 @@
     BOOL StartKey;
     BOOL StartValue;
     LoadZipFileNet *loadZipNet;
-    
 }
+@property(nonatomic, strong)IBOutlet UIProgressView *progressV;
+@property(nonatomic, strong)IBOutlet UILabel *proValueLb;
+@property(nonatomic, strong)IBOutlet UILabel *proMarkLb;
 - (id)initWithSimMenuV:(SimpMenuView*)simMenuView;
 - (IBAction)close:(UIButton*)sender;
 @end

@@ -13,14 +13,15 @@
 {
     NSMutableData *backData;
     NSString *zipStr;
+    NSURLConnection *connect;
     int connectNum;
 }
 @property(nonatomic, weak)id<NetworkDelegate>delegate;
 @property(nonatomic, strong)NSString *md5Str;
 @property(nonatomic, strong)NSString *urlStr;
 @property(nonatomic, strong)NSString *zipStr;
-
+@property(nonatomic, assign)float zipSize;
 
 - (void)loadMenuFromUrl;
-
+- (void)cancelLoad;
 @end

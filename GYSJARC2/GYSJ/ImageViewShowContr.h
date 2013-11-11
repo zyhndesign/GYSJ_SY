@@ -26,5 +26,7 @@
     ImageLoadNet *imageLoadNet;
 }
 
+@property(nonatomic, strong)NSString *idStr;
+
 - (id)initwithURL:(NSString*)URLStr;
 @end

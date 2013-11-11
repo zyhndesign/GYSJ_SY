@@ -95,24 +95,6 @@
     return UIInterfaceOrientationIsLandscape(toInterfaceOrientation);
 }
 
-- (void)goolTrack
-{
-//    ///// googl track
-//    [GAI sharedInstance].trackUncaughtExceptions = YES;
-//    
-//    // Optional: set Google Analytics dispatch interval to e.g. 20 seconds.
-//    [GAI sharedInstance].dispatchInterval = 20;
-//    
-//    // Optional: set Logger to VERBOSE for debug information.
-//    [[[GAI sharedInstance] logger] setLogLevel:kGAILogLevelVerbose];
-//    
-//    // Initialize tracker.
-//    [[GAI sharedInstance] trackerWithName:@"工业设计史"
-//                               trackingId:kTrackingId];
-}
-
-
-
 - (void)addFilterView
 {
     filterMenuViewContr = [[FilterMenuViewContr alloc] init];

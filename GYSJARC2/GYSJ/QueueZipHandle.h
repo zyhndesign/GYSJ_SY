@@ -14,5 +14,5 @@
 }
 + (void)init;
 + (void)addTarget:(id)target;
-+ (void)taskFinish;
++ (void)taskFinish:(id)target;
 @end

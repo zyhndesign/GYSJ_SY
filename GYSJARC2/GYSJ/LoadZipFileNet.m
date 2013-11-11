@@ -10,6 +10,7 @@
 #import "MFSP_MD5.h"
 #import "ZipArchive.h"
 #import "QueueZipHandle.h"
+#import "ContentViewContr.h"
 
 @implementation LoadZipFileNet
 
@@ -17,6 +18,7 @@
 @synthesize md5Str;
 @synthesize urlStr;
 @synthesize zipStr;
+@synthesize zipSize;
 
 - (void)loadMenuFromUrl
 {
@@ -27,11 +29,17 @@
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlStr] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0f];
     [request setHTTPMethod:@"GET"];
     
-    NSURLConnection *connect = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:YES];
+    connect = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:YES];
     if (connect)
     {
         backData = [[NSMutableData alloc] init];
     }
+}
+
+- (void)cancelLoad
+{
+    if (connect)
+        [connect cancel];
 }
 
 - (void)reloadUrlData
@@ -43,7 +51,7 @@
 {
     if ([error code] == -1009)
     {
-        [QueueZipHandle taskFinish];
+        [QueueZipHandle taskFinish:self];
         if (!delegate&& [delegate respondsToSelector:@selector(didReceiveErrorCode:)])
         {
             [delegate didReceiveErrorCode:error];
@@ -53,7 +61,7 @@
     }
     if (connectNum == 2)
     {
-        [QueueZipHandle taskFinish];
+        [QueueZipHandle taskFinish:self];
         [delegate didReceiveErrorCode:error];
     }
     else
@@ -73,6 +81,10 @@
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
     [backData appendData:data];
+    ContentViewContr *contentVC = (ContentViewContr*)delegate;
+    contentVC.progressV.progress = [backData length]/zipSize;
+    int value = [backData length]/zipSize * 100;
+    contentVC.proValueLb.text = [NSString stringWithFormat:@"%2d", value];
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
@@ -122,9 +134,16 @@
         [fileManager removeItemAtPath:filePath error:nil];
         [delegate didReceiveErrorCode:nil];
     }
-    [QueueZipHandle taskFinish];
+    [QueueZipHandle taskFinish:self];
 }
 
+- (void)dealloc
+{
+    md5Str = nil;
+    urlStr = nil;
+    zipStr = nil;
+    connect = nil;
+}
 
 @end
 

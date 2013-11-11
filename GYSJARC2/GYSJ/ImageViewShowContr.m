@@ -14,6 +14,7 @@
 @end
 
 @implementation ImageViewShowContr
+@synthesize idStr;
 
 - (id)initwithURL:(NSString*)URLStr
 {
@@ -39,21 +40,28 @@
     
     [scrllview addObserver:self forKeyPath:@"contentSize" options:NSKeyValueObservingOptionNew context:nil];
     
-    imageLoadNet = [[ImageLoadNet alloc] init];
-    imageLoadNet.delegate = self;
-    [imageLoadNet loadImageFromUrl:urlStr];
-    
-    activeView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    activeView.center = CGPointMake(512, 370);
-    [activeView startAnimating];
-    [stopView addSubview:activeView];
-    
-    [super viewDidLoad];
-}
+    NSString *fileName = [[urlStr componentsSeparatedByString:@"/"] lastObject];
+    NSString *doctPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)  lastObject];
+    NSString *documentPath = [doctPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@/doc/images", idStr]];
+    NSString *filePath = [[documentPath stringByAppendingPathComponent:fileName] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    BOOL direc = NO;
+    if ([[NSFileManager defaultManager] fileExistsAtPath:filePath isDirectory:&direc])
+    {
+        [self didReciveImage:[UIImage imageWithContentsOfFile:filePath]];
+        //[imageView setImage:[UIImage imageWithContentsOfFile:filePath]];
+    }
+    else
+    {
+        imageLoadNet = [[ImageLoadNet alloc] init];
+        imageLoadNet.delegate = self;
+        [imageLoadNet loadImageFromUrl:urlStr];
 
-- (void)viewWillAppear:(BOOL)animated
-{
-  
+        activeView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        activeView.center = CGPointMake(512, 370);
+        [activeView startAnimating];
+        [stopView addSubview:activeView];
+    }
+    [super viewDidLoad];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
@@ -70,11 +78,15 @@
 {
     [scrllview removeObserver:self forKeyPath:@"contentSize" context:nil];
     
-    urlStr = nil;
+    urlStr    = nil;
     imageView = nil;
     scrllview = nil;
-    stopView = nil;
-    
+    stopView  = nil;
+    idStr     = nil;
+    if (activeView)
+        activeView = nil;
+    if (imageLoadNet)
+        imageLoadNet = nil;
 }
 
 - (void)tapGest:(UITapGestureRecognizer*)gesTesture

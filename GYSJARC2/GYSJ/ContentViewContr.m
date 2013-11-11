@@ -20,6 +20,10 @@
 @end
 
 @implementation ContentViewContr
+@synthesize progressV;
+@synthesize proMarkLb;
+@synthesize proValueLb;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -43,6 +47,9 @@
     self.trackedViewName = @"content";
     [super viewDidLoad];
     
+    progressV.progressTintColor = LabelBgColor;
+    progressV.progress = 0.0f;
+    
     infoDict = [[NSMutableDictionary alloc] init];
     
     id scroller = [_webView.subviews objectAtIndex:0];
@@ -63,10 +70,12 @@
     if([[NSFileManager defaultManager] fileExistsAtPath:documentPath isDirectory:&dirBOOL])
     {
         [self webViewLoadLocalData];
+        progressV.hidden  = YES;
+        proValueLb.hidden = YES;
+        proMarkLb.hidden  = YES;
     }
     else
     {
-        [activeView startAnimating];
         [self startLoadSimpleZipData];
     }
 }
@@ -84,9 +93,14 @@
 - (void)dealloc
 {
     [_webView removeFromSuperview];
-    _webView = nil;
-    [activeView removeFromSuperview];
-    activeView = nil;
+    _webView   = nil;
+    [progressV removeFromSuperview];
+    progressV  = nil;
+    [proValueLb removeFromSuperview];
+    proValueLb = nil;
+    [proMarkLb removeFromSuperview];
+    proMarkLb = nil;
+    
     [infoDict removeAllObjects];
     infoDict = nil;
     initDict = nil;
@@ -100,9 +114,10 @@
     {
         loadZipNet = [[LoadZipFileNet alloc] init];
         loadZipNet.delegate = self;
-        loadZipNet.urlStr   = [initDict objectForKey:@"url"];
+        loadZipNet.urlStr   = [initDict  objectForKey:@"url"];
         loadZipNet.md5Str   = [[initDict objectForKey:@"md5"] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        loadZipNet.zipStr = [initDict objectForKey:@"id"];
+        loadZipNet.zipStr   = [initDict  objectForKey:@"id"];
+        loadZipNet.zipSize  = [[initDict objectForKey:@"size"] floatValue];
         [QueueZipHandle addTarget:loadZipNet];
     }
 }
@@ -129,13 +144,18 @@
 
 - (void)didReceiveResult:(BOOL)success
 {
+    progressV.hidden  = YES;
+    proValueLb.hidden = YES;
+    proMarkLb.hidden  = YES;
     [self webViewLoadLocalData];
-    [activeView stopAnimating];
 }
 
 - (void)didReceiveErrorCode:(NSError *)Error
 {
-    [activeView stopAnimating];
+    progressV.hidden  = YES;
+    proValueLb.hidden = YES;
+    proMarkLb.hidden  = YES;
+
     if ([Error code] == -1009)
     {
         UIAlertView *alerView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"网络连接失败，请检查网络设置。" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
@@ -223,6 +243,7 @@
     if ([urlStr componentsSeparatedByString:@"show_image"].count > 1 || [urlStr componentsSeparatedByString:@"wp-content"].count > 1)
     {
         ImageViewShowContr *imageViewSContr = [[ImageViewShowContr alloc] initwithURL:urlStr];
+        imageViewSContr.idStr = [initDict  objectForKey:@"id"];
         [self presentViewController:imageViewSContr animated:YES completion:nil];
         return NO;
     }
@@ -260,7 +281,6 @@
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
     _webView.scrollView.scrollEnabled = YES;
-    [activeView stopAnimating];
 }
 
 @end

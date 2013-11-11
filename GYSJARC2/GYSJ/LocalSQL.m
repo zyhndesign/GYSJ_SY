@@ -42,7 +42,7 @@ __strong sqlite3 *dataBase;
 
 + (BOOL)createLocalTable
 {
-    NSString *sqlStr = [NSString stringWithFormat:@"create table if not exists myTable(id char primary key,name char,md5 char, timestamp char, url char,city char,coordinate char,genre char, summary char,year char, artists char, organizations char, postDate char,background char,profile char)"];
+    NSString *sqlStr = [NSString stringWithFormat:@"create table if not exists myTable(id char primary key,name char,md5 char, timestamp char, url char,city char,coordinate char,genre char, summary char,year char, artists char, organizations char, postDate long,background char,profile char, size char)"];
    //  NSString *sqlStr = [NSString stringWithFormat:@"create table if not exists myTable(id char,name char,md5 char, timestamp char, url char,city char,coordinate char,genre char, summary char,year char, artists char, organizations char, postDate char,background char,profile char)"];
     sqlite3_stmt *stmt;
     if (sqlite3_prepare_v2(dataBase, [sqlStr UTF8String], -1, &stmt, 0) != SQLITE_OK)
@@ -81,10 +81,11 @@ __strong sqlite3 *dataBase;
             NSString *yearStr    = [NSString stringWithFormat:@"%s", sqlite3_column_text(stmt, 9)];
             NSString *artiStr    = [NSString stringWithCString:(const char*)sqlite3_column_text(stmt, 10) encoding:NSUTF8StringEncoding];
             NSString *organStr   = [NSString stringWithCString:(const char*)sqlite3_column_text(stmt, 11) encoding:NSUTF8StringEncoding];
-            NSString *postDateStr = [NSString stringWithCString:(const char*)sqlite3_column_text(stmt, 12) encoding:NSUTF8StringEncoding];
+            NSString *postDateStr = [NSString stringWithFormat:@"%lld", sqlite3_column_int64(stmt, 12)];
             NSString *backgroundStr = [NSString stringWithCString:(const char*)sqlite3_column_text(stmt, 13) encoding:NSUTF8StringEncoding];
             NSString *profileStr = [NSString stringWithCString:(const char*)sqlite3_column_text(stmt, 14) encoding:NSUTF8StringEncoding];
-            NSDictionary *subDict = [NSDictionary dictionaryWithObjectsAndKeys:idStr, @"id", nameStr, @"name",md5Str, @"md5", timeStampStr,@"timestamp", urlStr,@"url",cityStr,@"city",coordStr,@"coordinate", genreStr,@"genre",summaryStr,@"summary",yearStr,@"year",artiStr,@"artists",organStr,@"organizations", postDateStr, @"postDate", backgroundStr, @"background", profileStr, @"profile", nil];
+            NSString *sizeStr = [NSString stringWithFormat:@"%s", sqlite3_column_text(stmt, 15)];
+            NSDictionary *subDict = [NSDictionary dictionaryWithObjectsAndKeys:idStr, @"id", nameStr, @"name",md5Str, @"md5", timeStampStr,@"timestamp", urlStr,@"url",cityStr,@"city",coordStr,@"coordinate", genreStr,@"genre",summaryStr,@"summary",yearStr,@"year",artiStr,@"artists",organStr,@"organizations", postDateStr, @"postDate", backgroundStr, @"background", profileStr, @"profile", sizeStr, @"size",nil];
             
             if (backAry.count == 0)
             {
@@ -141,7 +142,7 @@ __strong sqlite3 *dataBase;
         {
             NSString *idStr   = [NSString stringWithFormat:@"%s", sqlite3_column_text(stmt, 0)];
             NSString *yearStr = [NSString stringWithCString:(const char*)sqlite3_column_text(stmt, 1) encoding:NSUTF8StringEncoding];
-            NSString *postDateStr = [NSString stringWithFormat:@"%s", sqlite3_column_text(stmt, 2)];
+            NSString *postDateStr = [NSString stringWithFormat:@"%lld", sqlite3_column_int64(stmt, 12)];
             [infoDict setObject:idStr       forKey:@"id"];
             [infoDict setObject:yearStr     forKey:@"year"];
             [infoDict setObject:postDateStr forKey:@"postDate"];
@@ -173,10 +174,11 @@ __strong sqlite3 *dataBase;
             NSString *yearStr    = [NSString stringWithFormat:@"%s", sqlite3_column_text(stmt, 9)];
             NSString *artiStr    = [NSString stringWithCString:(const char*)sqlite3_column_text(stmt, 10) encoding:NSUTF8StringEncoding];
             NSString *organStr   = [NSString stringWithCString:(const char*)sqlite3_column_text(stmt, 11) encoding:NSUTF8StringEncoding];
-            NSString *postDateStr = [NSString stringWithCString:(const char*)sqlite3_column_text(stmt, 12) encoding:NSUTF8StringEncoding];
+            NSString *postDateStr = [NSString stringWithFormat:@"%lld", sqlite3_column_int64(stmt, 12)];
             NSString *backgroundStr = [NSString stringWithCString:(const char*)sqlite3_column_text(stmt, 13) encoding:NSUTF8StringEncoding];
             NSString *profileStr = [NSString stringWithCString:(const char*)sqlite3_column_text(stmt, 14) encoding:NSUTF8StringEncoding];
-            NSDictionary *subDict = [NSDictionary dictionaryWithObjectsAndKeys:idStr, @"id", nameStr, @"name",md5Str, @"md5", timeStampStr,@"timestamp", urlStr,@"url",cityStr,@"city",coordStr,@"coordinate", genreStr,@"genre",summaryStr,@"summary",yearStr,@"year",artiStr,@"artists",organStr,@"organizations", postDateStr, @"postDate", backgroundStr, @"background", profileStr, @"profile", nil];
+            NSString *sizeStr = [NSString stringWithFormat:@"%s", sqlite3_column_text(stmt, 15)];
+            NSDictionary *subDict = [NSDictionary dictionaryWithObjectsAndKeys:idStr, @"id", nameStr, @"name",md5Str, @"md5", timeStampStr,@"timestamp", urlStr,@"url",cityStr,@"city",coordStr,@"coordinate", genreStr,@"genre",summaryStr,@"summary",yearStr,@"year",artiStr,@"artists",organStr,@"organizations", postDateStr, @"postDate", backgroundStr, @"background", profileStr, @"profile", sizeStr, @"size", nil];
             [backAry addObject:subDict];
         }
         sqlite3_finalize(stmt);
@@ -341,89 +343,6 @@ __strong sqlite3 *dataBase;
     }
     return nil;
 }
-+ (NSArray*)getAllDataFromGener:(NSString*)gener artists:(NSString*)artists organizations:(NSString*)organizations;
-{
-    NSMutableArray *backAry = [NSMutableArray array];
-    NSString *sqlStr = @"select *from mytable";
-    if (gener.length > 0)
-    {
-        if (artists.length > 0)
-        {
-            if (organizations.length >0)
-            {
-                sqlStr = [NSString stringWithFormat:@"%@ where genre like '%%%@%%' and artists like '%%%@%%' and organizations like '%%%@%%'", sqlStr, gener, artists, organizations];
-            }
-            else
-            {
-                sqlStr = [NSString stringWithFormat:@"%@ where genre like '%%%@%%' and artists like '%%%@%%'", sqlStr, gener, artists];
-            }
-        }
-        else
-        {
-            if (organizations.length >0)
-            {
-                sqlStr = [NSString stringWithFormat:@"%@ where genre like '%%%@%%'  and organizations like '%%%@%%'", sqlStr, gener, organizations];
-            }
-            else
-            {
-                sqlStr = [NSString stringWithFormat:@"%@ where genre like '%%%@%%'", sqlStr, gener];
-            }
-        }
-        
-    }
-    else
-    {
-        if (artists.length > 0)
-        {
-            if (organizations.length >0)
-            {
-                sqlStr = [NSString stringWithFormat:@"%@ where artists like '%%%@%%' and organizations like '%%%@%%'", sqlStr, artists, organizations];
-            }
-            else
-            {
-                sqlStr = [NSString stringWithFormat:@"%@ where  artists like '%%%@%%' ", sqlStr, artists];
-            }
-        }
-        else
-        {
-            if (organizations.length >0)
-            {
-                sqlStr = [NSString stringWithFormat:@"%@ where organizations like '%%%@%%'", sqlStr, organizations];
-            }
-            else
-            {
-                
-            }
-        }
-    }
-    sqlite3_stmt *stmt;
-    if (sqlite3_prepare_v2(dataBase, [sqlStr UTF8String], -1, &stmt, 0) == SQLITE_OK)
-    {
-        while (sqlite3_step(stmt) == SQLITE_ROW)
-        {
-            NSString *idStr   = [NSString stringWithFormat:@"%s", sqlite3_column_text(stmt, 0)];
-            NSString *nameStr = [NSString stringWithCString:(const char*)sqlite3_column_text(stmt, 1) encoding:NSUTF8StringEncoding];
-            NSString *md5Str  = [NSString stringWithFormat:@"%s", sqlite3_column_text(stmt, 2)];
-            NSString *timeStampStr = [NSString stringWithFormat:@"%s", sqlite3_column_text(stmt, 3)];
-            NSString *urlStr       = [NSString stringWithFormat:@"%s", sqlite3_column_text(stmt, 4)];
-            NSString *cityStr = [NSString stringWithCString:(const char*)sqlite3_column_text(stmt, 5) encoding:NSUTF8StringEncoding];
-            NSString *coordStr     = [NSString stringWithFormat:@"%s", sqlite3_column_text(stmt, 6)];
-            NSString *genreStr     = [NSString stringWithCString:(const char*)sqlite3_column_text(stmt, 7) encoding:NSUTF8StringEncoding];
-            NSString *summaryStr = [NSString stringWithCString:(const char*)sqlite3_column_text(stmt, 8) encoding:NSUTF8StringEncoding];
-            NSString *yearStr    = [NSString stringWithFormat:@"%s", sqlite3_column_text(stmt, 9)];
-            NSString *artiStr    = [NSString stringWithCString:(const char*)sqlite3_column_text(stmt, 10) encoding:NSUTF8StringEncoding];
-            NSString *organStr   = [NSString stringWithCString:(const char*)sqlite3_column_text(stmt, 11) encoding:NSUTF8StringEncoding];
-            NSString *postDateStr = [NSString stringWithCString:(const char*)sqlite3_column_text(stmt, 12) encoding:NSUTF8StringEncoding];
-            NSString *backgroundStr = [NSString stringWithCString:(const char*)sqlite3_column_text(stmt, 13) encoding:NSUTF8StringEncoding];
-            NSString *profileStr = [NSString stringWithCString:(const char*)sqlite3_column_text(stmt, 14) encoding:NSUTF8StringEncoding];
-            NSDictionary *subDict = [NSDictionary dictionaryWithObjectsAndKeys:idStr, @"id", nameStr, @"name",md5Str, @"md5", timeStampStr,@"timestamp", urlStr,@"url",cityStr,@"city",coordStr,@"coordinate", genreStr,@"genre",summaryStr,@"summary",yearStr,@"year",artiStr,@"artists",organStr,@"organizations", postDateStr, @"postDate", backgroundStr, @"background", profileStr, @"profile", nil];
-            [backAry addObject:subDict];
-        }
-        sqlite3_finalize(stmt);
-        return backAry;
-    }
-    return nil;
-}
 
 + (NSArray*)getAllDateFromConditionType:(int)type condition:(NSString*)conditionStr
 {
@@ -455,10 +374,11 @@ __strong sqlite3 *dataBase;
             NSString *yearStr    = [NSString stringWithFormat:@"%s", sqlite3_column_text(stmt, 9)];
             NSString *artiStr    = [NSString stringWithCString:(const char*)sqlite3_column_text(stmt, 10) encoding:NSUTF8StringEncoding];
             NSString *organStr   = [NSString stringWithCString:(const char*)sqlite3_column_text(stmt, 11) encoding:NSUTF8StringEncoding];
-            NSString *postDateStr = [NSString stringWithCString:(const char*)sqlite3_column_text(stmt, 12) encoding:NSUTF8StringEncoding];
+            NSString *postDateStr = [NSString stringWithFormat:@"%lld", sqlite3_column_int64(stmt, 12)];
             NSString *backgroundStr = [NSString stringWithCString:(const char*)sqlite3_column_text(stmt, 13) encoding:NSUTF8StringEncoding];
             NSString *profileStr = [NSString stringWithCString:(const char*)sqlite3_column_text(stmt, 14) encoding:NSUTF8StringEncoding];
-            NSDictionary *subDict = [NSDictionary dictionaryWithObjectsAndKeys:idStr, @"id", nameStr, @"name",md5Str, @"md5", timeStampStr,@"timestamp", urlStr,@"url",cityStr,@"city",coordStr,@"coordinate", genreStr,@"genre",summaryStr,@"summary",yearStr,@"year",artiStr,@"artists",organStr,@"organizations", postDateStr, @"postDate", backgroundStr, @"background", profileStr, @"profile", nil];
+            NSString *sizeStr    = [NSString stringWithFormat:@"%s", sqlite3_column_text(stmt, 15)];
+            NSDictionary *subDict = [NSDictionary dictionaryWithObjectsAndKeys:idStr, @"id", nameStr, @"name",md5Str, @"md5", timeStampStr,@"timestamp", urlStr,@"url",cityStr,@"city",coordStr,@"coordinate", genreStr,@"genre",summaryStr,@"summary",yearStr,@"year",artiStr,@"artists",organStr,@"organizations", postDateStr, @"postDate", backgroundStr, @"background", profileStr, @"profile", sizeStr, @"size", nil];
             
             if (backAry.count == 0)
             {
@@ -521,10 +441,12 @@ __strong sqlite3 *dataBase;
     NSString *md5Str    = [infoDict objectForKey:@"md5"];
     NSString *timestamp = [infoDict objectForKey:@"timestamp"];
     NSString *urlStr    = [infoDict objectForKey:@"url"];
+    NSString *sizeStr   = [infoDict objectForKey:@"size"];
+    
     NSString *yearStr   = [subInfoDict objectForKey:@"year"];
     if ([yearStr integerValue] <= StartYear)
         yearStr = [NSString stringWithFormat:@"0000"];
-    NSString *postDateS = [subInfoDict objectForKey:@"postDate"];
+    long postDateS = [[subInfoDict objectForKey:@"postDate"] longLongValue];
     
     NSString *cityStr = [subInfoDict objectForKey:@"city"];
     if ([cityStr isEqual:[NSNull null]] || cityStr == nil)
@@ -609,13 +531,13 @@ __strong sqlite3 *dataBase;
             NSString *pathBgFile = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:[NSString stringWithFormat:@"BgImage/%@.%@",idStr, BgImgeFormat]];
             [[NSFileManager defaultManager] removeItemAtPath:pathBgFile error:nil];
         }
-        sqlStr = [NSString stringWithFormat:@"update mytable set name='%@',md5='%@',timestamp='%@',url='%@',city='%@',coordinate='%@',genre='%@',summary='%@',year='%@',artists='%@',organizations='%@', postDate='%@', background='%@',profile='%@' where id = '%@'",nameStr, md5Str, timestamp, urlStr, cityStr, coordStr, genreStr, summaryStr, yearStr, artistStr, organStr, postDateS,backgroundStr, profileStr,idStr];
+        sqlStr = [NSString stringWithFormat:@"update mytable set name='%@',md5='%@',timestamp='%@',url='%@',city='%@',coordinate='%@',genre='%@',summary='%@',year='%@',artists='%@',organizations='%@', postDate='%ld', background='%@',profile='%@', size='%@' where id = '%@'",nameStr, md5Str, timestamp, urlStr, cityStr, coordStr, genreStr, summaryStr, yearStr, artistStr, organStr, postDateS,backgroundStr, profileStr, sizeStr, idStr];
         NSString *docPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:idStr];
         [[NSFileManager defaultManager] removeItemAtPath:docPath error:nil];
     }
     else
     {
-        sqlStr = [NSString stringWithFormat:@"insert into mytable values('%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@', '%@', '%@', '%@')", idStr,nameStr, md5Str, timestamp, urlStr, cityStr, coordStr, genreStr, summaryStr, yearStr, artistStr, organStr, postDateS, backgroundStr, profileStr];
+        sqlStr = [NSString stringWithFormat:@"insert into mytable values('%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@', '%ld', '%@', '%@', '%@')", idStr,nameStr, md5Str, timestamp, urlStr, cityStr, coordStr, genreStr, summaryStr, yearStr, artistStr, organStr, postDateS, backgroundStr, profileStr, sizeStr];
     }
     sqlite3_stmt *stmt;
     if (sqlite3_prepare_v2(dataBase, [sqlStr UTF8String], -1, &stmt, 0) != SQLITE_OK)

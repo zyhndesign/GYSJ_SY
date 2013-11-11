@@ -35,7 +35,6 @@
 
 + (NSArray*)getGenerFromArtistsCondition:(NSString*)artists;
 + (NSArray*)getArtistsFromArtistsCondition:(NSString*)Gener;
-+ (NSArray*)getAllDataFromGener:(NSString*)gener artists:(NSString*)artists organizations:(NSString*)organizations;
 + (NSArray*)getAllDateFromConditionType:(int)type condition:(NSString*)conditionStr;
 
 
