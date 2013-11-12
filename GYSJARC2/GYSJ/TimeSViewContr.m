@@ -23,7 +23,7 @@
 @implementation TimeSViewContr
 @synthesize delegate;
 @synthesize delegateScroll;
-
+@synthesize scalePram;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -103,11 +103,11 @@ static float currentScorllCenter;
 
 - (void) handlePinch:(UIPinchGestureRecognizer*) recognizer
 {
-    if (AllFilterMenuVCtr.currentFilterStr.length > 0)  /// fitler Mode
-        return;
+//    if (AllFilterMenuVCtr.currentFilterStr.length > 0)  /// fitler Mode
+//        return;
     if (recognizer.state == UIGestureRecognizerStateBegan)
     {
-        currentScorllCenter = (_scrollView.contentOffset.x + 512)/scalePram;
+        currentScorllCenter = (AllTimeScrolV.contentOffset.x + 512)/scalePram;
         beforeScale = recognizer.scale - 1;
         scalePram += (recognizer.scale-1);
         isScaling = YES;
@@ -119,11 +119,11 @@ static float currentScorllCenter;
         if (scalePram < 0.5)
             scalePram = 0.5;
         float currentGap = scalePram*GapX;
-        if (scalePram*currentScorllCenter - 512 < 0)
+        if (scalePram*currentScorllCenter - 512 < 0)  //// 缩小后时间指针指向startYear
         {
             [UIView animateWithDuration:0.5
                              animations:^(void){
-                                 for(UIView *view in [_scrollView subviews])
+                                 for(UIView *view in [AllTimeScrolV subviews])
                                  {
                                      int TTag = view.tag;
                                      if(TTag > 0 && TTag < StartYear) /// 竖条
@@ -147,8 +147,8 @@ static float currentScorllCenter;
                                          }
                                      }
                                      else ;
-                                     [_scrollView setContentSize:CGSizeMake((AllNowYears - StartYear)*GapYear*scalePram + 1024, _scrollView.frame.size.height)];
-                                     [_scrollView setContentOffset:CGPointMake(0, 0)];
+                                     [AllTimeScrolV setContentSize:CGSizeMake((AllNowYears - StartYear)*GapYear*scalePram + 1024, AllTimeScrolV.frame.size.height)];
+                                     [AllTimeScrolV setContentOffset:CGPointMake(0, 0)];
                                  }
                              }
                              completion:^(BOOL finish){
@@ -161,7 +161,7 @@ static float currentScorllCenter;
         {
             [UIView animateWithDuration:0.5
                              animations:^(void){
-                                 for(UIView *view in [_scrollView subviews])
+                                 for(UIView *view in [AllTimeScrolV subviews])
                                  {
                                      int TTag = view.tag;
                                      if(TTag > 0 && TTag < StartYear) /// 竖条
@@ -185,11 +185,11 @@ static float currentScorllCenter;
                                          }
                                      }
                                      else ;
-                                     [_scrollView setContentOffset:CGPointMake(scalePram*currentScorllCenter - 512, 0)];
+                                     [AllTimeScrolV setContentOffset:CGPointMake(scalePram*currentScorllCenter - 512, 0)];
                                  }
                              }
                              completion:^(BOOL finish){
-                                 [_scrollView setContentSize:CGSizeMake((AllNowYears - StartYear)*GapYear*scalePram + 1024, _scrollView.frame.size.height)];
+                                 [AllTimeScrolV setContentSize:CGSizeMake((AllNowYears - StartYear)*GapYear*scalePram + 1024, AllTimeScrolV.frame.size.height)];
                                  int offsetx = scalePram*currentScorllCenter - 512;
                                  int year = StartYear;
                                  int beforeYear = StartYear;
@@ -198,11 +198,11 @@ static float currentScorllCenter;
                 
                                  if (offsetx < 0)
                                  {
-                                     [_scrollView setContentOffset:CGPointMake(0, 0)];
+                                     [AllTimeScrolV setContentOffset:CGPointMake(0, 0)];
                                  }
                                  else if (offsetx > (AllNowYears - StartYear)*GapYear*scalePram)
                                  {
-                                     [_scrollView setContentOffset:CGPointMake((AllNowYears - StartYear)*GapYear*scalePram, 0)];
+                                     [AllTimeScrolV setContentOffset:CGPointMake((AllNowYears - StartYear)*GapYear*scalePram, 0)];
                                      year = maxYear;
                                  }
                                  else
@@ -212,7 +212,7 @@ static float currentScorllCenter;
                                  int timePos = [DataHandle backTimePositionScrolCurrentYear:year];
                                  int currentYearPos = [[AllMenuPosition_YearDict objectForKey:[NSString stringWithFormat:@"%d", beforeYear]] intValue];
                                  int posGap = currentYearPos - timePos;
-                                 if (posGap >= -1 && posGap <= 1)
+                                 if (posGap >= -1 && posGap <= 1) /// 相差一年的距离就不需要移动
                                  {
                                      
                                  }
@@ -237,7 +237,7 @@ static float currentScorllCenter;
     scalePram = scalePram < 0.2?0.2:scalePram;
     
     float currentGap = scalePram*GapX;
-    for(UIView *view in [_scrollView subviews])
+    for(UIView *view in [AllTimeScrolV subviews])
     {
         int TTag = view.tag;
         if(TTag > 0 && TTag < StartYear) /// 竖条
@@ -262,8 +262,8 @@ static float currentScorllCenter;
         }
         else ;
     }
-    [_scrollView setContentSize:CGSizeMake((AllNowYears - StartYear)*GapYear*scalePram + 1024, _scrollView.frame.size.height)];
-    [_scrollView setContentOffset:CGPointMake(scalePram*currentScorllCenter - 512, 0)];
+    [AllTimeScrolV setContentSize:CGSizeMake((AllNowYears - StartYear)*GapYear*scalePram + 1024, AllTimeScrolV.frame.size.height)];
+    [AllTimeScrolV setContentOffset:CGPointMake(scalePram*currentScorllCenter - 512, 0)];
 
  //   NSLog(@"捏合, %f", scalePram);
 }
@@ -369,7 +369,7 @@ static float currentScorllCenter;
     if (yearStartPointx < 0)
         yearStartPointx = 0;
     if (yearStartPointx > AllTimeScrolV.contentSize.width - GapYear*scalePram)
-        yearStartPointx = AllMenuScrollV.contentSize.width - GapYear*scalePram;
+        yearStartPointx = AllTimeScrolV.contentSize.width - GapYear*scalePram;
     [_scrollView setContentOffset:CGPointMake(yearStartPointx, 0) animated:YES];
 }
 
@@ -463,7 +463,14 @@ static float currentScorllCenter;
         {
             UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"event_dot_bg.png"]];
             imageView.tag = years*10 + j;
-            [imageView setFrame:CGRectMake(StartX + (years - (StartYear + 1))*GapYear*scalePram - 5, StartTopY + j*14 - j*5, 14, 14)];
+            if (scalePram > 1)
+            {
+                [imageView setFrame:CGRectMake(StartX + (years - (StartYear + 1))*GapYear*scalePram - 5*scalePram, StartTopY + j*14 - j*5, 14, 14)];
+            }
+            else
+            {
+                [imageView setFrame:CGRectMake(StartX + (years - (StartYear + 1))*GapYear*scalePram - 5*scalePram, StartTopY + j*14 - j*5, 14*scalePram, 14*scalePram)];
+            }
             [AllTimeScrolV addSubview:imageView];
             imageView = nil;
         }

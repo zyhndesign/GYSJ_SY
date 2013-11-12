@@ -264,7 +264,6 @@
     {
         return;
     }
-    
     [AllMenuScrollV setContentOffset:CGPointMake(page*MenuViewWidth, 0) animated:YES];
     [AllTimeSVContr changLabelStatus:year];
 }
@@ -551,7 +550,16 @@ static BOOL touchOver;  // 边界反弹问题， touchover是在手松开后再�
     [self rebuiltFilterMenuView:infoArray];
     
     int yearTag = [[AllMenuYear_PositionDict objectForKey:@"0"] intValue];
-    [AllTimeScrolV setContentOffset:CGPointMake((yearTag - StartYear)*GapYear, 0) animated:YES];
+    float yearStartPointx = (yearTag - StartYear)*GapYear*AllTimeSVContr.scalePram;
+    
+    yearStartPointx += (1-AllTimeSVContr.scalePram)*2*GapX/20;
+    
+    delegateScroll = YES;
+    if (yearStartPointx < 0)
+        yearStartPointx = 0;
+    if (yearStartPointx > AllTimeScrolV.contentSize.width - GapYear*AllTimeSVContr.scalePram)
+        yearStartPointx = AllTimeScrolV.contentSize.width - GapYear*AllTimeSVContr.scalePram;
+    [AllTimeScrolV setContentOffset:CGPointMake(yearStartPointx, 0) animated:YES];
 }
 
 - (void)customModel

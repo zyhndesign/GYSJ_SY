@@ -221,7 +221,11 @@
                      completion:^(BOOL finish){
                      }];
 }
-
+/**
+ *  Normal mode
+ *
+ *  @param sender
+ */
 - (IBAction)closeCondition:(UIButton*)sender
 {
     if (isScrollAnim)
@@ -229,7 +233,7 @@
         isScrollAnim = NO;
         return;
     }
-
+    
     UILabel *label = (UILabel*)[shadowView viewWithTag:30];
     label.text = @"";
     UIButton *btTwo = (UIButton*)[shadowView viewWithTag:20];
@@ -272,8 +276,16 @@
         [timeSViewContr rebuildEventView:AllInfoArray];
         [AllMenuViewContr customModel];
         int cusmPage = [[AllMenuPosition_YearDict objectForKey:[NSString stringWithFormat:@"%d", year]] intValue];
+        
         timeSViewContr.delegateScroll = YES;
-        [AllTimeScrolV  setContentOffset:CGPointMake((year - StartYear)*GapYear, 0) animated:YES];
+        float yearStartPointx = (year - StartYear)*GapYear*AllTimeSVContr.scalePram;
+        yearStartPointx += (1-AllTimeSVContr.scalePram)*2*GapX/20;
+        if (yearStartPointx < 0)
+            yearStartPointx = 0;
+        if (yearStartPointx > AllTimeScrolV.contentSize.width - GapYear*AllTimeSVContr.scalePram)
+            yearStartPointx = AllTimeScrolV.contentSize.width - GapYear*AllTimeSVContr.scalePram;
+        [AllTimeScrolV setContentOffset:CGPointMake(yearStartPointx, 0) animated:YES];
+        
         [AllMenuScrollV setContentOffset:CGPointMake(cusmPage*MenuViewWidth, 0)];
         [menuViewContr loadCurrentPagePreAfterFive:cusmPage count:2];
         
@@ -294,6 +306,12 @@
 
 
 #pragma mark - filterDelegate
+/**
+ *  Filter Mode 
+ *
+ *  @param type    Filter Type
+ *  @param title   Filter Condition
+ */
 - (void)FilterSelectInfo:(int)type Title:(NSString*)title
 {
     UILabel *label = (UILabel*)[shadowView viewWithTag:30];
@@ -303,7 +321,7 @@
     UIButton *btOne = (UIButton*)[selectConditionView viewWithTag:10];
     [btOne setBackgroundImage:[UIImage imageNamed:@"btn_filter_gold.png"] forState:UIControlStateNormal];
     filterView.hidden = YES;
-    label.hidden = NO;
+    label.hidden    = NO;
     btTwo.hidden    = NO;
     
     [UIView animateWithDuration:0.5

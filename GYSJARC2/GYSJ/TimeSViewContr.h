@@ -22,7 +22,7 @@
 }
 @property(nonatomic, weak)id<TimeChangeDelegate>delegate;
 @property(nonatomic, assign)BOOL delegateScroll;
-
+@property(nonatomic, assign)float scalePram;
 - (void)changLabelStatus:(int)years;
 
 - (void)rebuildEventView:(NSArray*)eventAry;
