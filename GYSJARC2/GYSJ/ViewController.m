@@ -141,7 +141,6 @@
 
 - (void)didReceiveMemoryWarning
 {
-   // NSLog(@"rootView didReceiveMemoryWarning");
     [super didReceiveMemoryWarning];
     @autoreleasepool {
         if (launchView != nil)

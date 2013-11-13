@@ -37,9 +37,8 @@ FilterMenuViewContr *AllFilterMenuVCtr;
 
 */
 NSMutableArray *AllInfoArray; ///// 从数据库读出来的所有数据，为刷选功能服务，但关闭条件选择就直接用这个数组
-NSMutableDictionary *AllMenuPosition_YearDict;  /// MenuView 上作品位置key，value-Tag的对应关系
-NSMutableDictionary *AllMenuYear_PositionDict;  /// MenuView 上key-Tag,作品位置value，的对应关系
-
+NSMutableDictionary *AllMenuPosition_YearDict;  /// MenuView value(position),作品位置key(year)的对应关系
+NSMutableDictionary *AllMenuYear_PositionDict;  /// MenuView value(Year),作品位置key(Position)，的对应关系
 
 #endif
 

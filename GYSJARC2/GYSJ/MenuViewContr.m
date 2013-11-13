@@ -256,11 +256,11 @@
     int page = [[AllMenuPosition_YearDict objectForKey:[NSString stringWithFormat:@"%d", year]] integerValue];
     if (year != MinYear && page == 0 && AllMenuScrollV == _scrollerView)
         return;
-    if (AllMenuScrollV.contentOffset.x <= page*MenuViewWidth && AllMenuScrollV.contentOffset.x > (page-1)*MenuViewWidth)
+    if (AllMenuScrollV.contentOffset.x <= page*MenuViewWidth && AllMenuScrollV.contentOffset.x > (page-1)*MenuViewWidth)  /// 在原来区域
     {
         return;
     }
-    if (AllMenuScrollV.contentOffset.x >= page*MenuViewWidth && AllMenuScrollV.contentOffset.x < (page+1)*MenuViewWidth)
+    if (AllMenuScrollV.contentOffset.x >= page*MenuViewWidth && AllMenuScrollV.contentOffset.x < (page+1)*MenuViewWidth)  /// 在原来区域
     {
         return;
     }

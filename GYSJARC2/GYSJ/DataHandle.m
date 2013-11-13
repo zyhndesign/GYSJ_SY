@@ -77,16 +77,33 @@
         }
     }
 }
-
++ (NSArray*)sortAscendingArray:(NSArray*)initArray
+{
+    NSMutableArray *backAry = [NSMutableArray arrayWithArray:initArray];
+    for(int i = 0; i < backAry.count; i++)
+    {
+        for (int j = i; j < backAry.count; j++)
+        {
+            NSString *tempOne = [backAry objectAtIndex:i];
+            NSString *tempTwo = [backAry objectAtIndex:j];
+            if (tempOne.intValue > tempTwo.intValue)
+            {
+                [backAry exchangeObjectAtIndex:i withObjectAtIndex:j];
+            }
+        }
+    }
+    return backAry;
+}
 + (int)backTimePositionScrolCurrentYear:(int)year
 {
-    for (int i = 1; i < AllInfoArray.count ; i++)
+    
+    for (int i = 1; i < [AllMenuPosition_YearDict allKeys].count-1; i++)
     {
-        int years = [[[[AllInfoArray objectAtIndex:i] objectAtIndex:0] objectForKey:@"year"] intValue];
+        int years = [[AllMenuYear_PositionDict objectForKey:[NSString stringWithFormat:@"%d", i]] intValue];
         if (years > year)
             return i-1;
     }
-    return AllInfoArray.count-1;
+    return [AllMenuPosition_YearDict allKeys].count-1;
 }
 
 + (char)hanziFirstLetter:(NSString*)stringX

@@ -212,7 +212,7 @@ static float currentScorllCenter;
                                  int timePos = [DataHandle backTimePositionScrolCurrentYear:year];
                                  int currentYearPos = [[AllMenuPosition_YearDict objectForKey:[NSString stringWithFormat:@"%d", beforeYear]] intValue];
                                  int posGap = currentYearPos - timePos;
-                                 if (posGap >= -1 && posGap <= 1) /// 相差一年的距离就不需要移动
+                                 if (posGap == 0 && posGap == 1) /// 相差一个点的距离就不需要移动
                                  {
                                      
                                  }
@@ -360,7 +360,6 @@ static float currentScorllCenter;
 //    SubMenuView *subMenuVMid = (SubMenuView*)[AllMenuScrollV viewWithTag:posX/MenuViewWidth + MenuStartTag];
 //    int years = subMenuVMid.years;
     int years = [((UILabel*)[AllMenuScrollV viewWithTag:(posX/MenuViewWidth + TimeLabelStartTag)]).text intValue];
-   // NSLog(@"Border-----%d", years);
     float yearStartPointx = (years - StartYear)*GapYear*scalePram;
   
     yearStartPointx += (1-scalePram)*2*GapX/20;

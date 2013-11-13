@@ -285,7 +285,7 @@
 
 - (void)didReceiveErrorCode:(NSError *)Error
 {
-   // NSLog(@"imageError:%@", [Error debugDescription]);
+   
 }
 
 - (void)didReciveImage:(UIImage *)backImage
