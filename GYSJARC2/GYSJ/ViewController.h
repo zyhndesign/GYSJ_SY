@@ -45,6 +45,7 @@
 - (IBAction)versionInfoShow:(UIButton*)sender;
 
 
+- (void)versionImply;
 - (void)rebulidStopView;
 
 @end

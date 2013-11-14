@@ -82,9 +82,9 @@ static NSString *const kTrackingId = @"UA-44083057-2";
         NSString *trackViewUrl    = [releaseInfo objectForKey:@"trackViewUrl"];
         if ([latestVersion floatValue] > [self getVersion])
         {
-            isNewVersion = 1;
             [[NSUserDefaults standardUserDefaults] setObject:trackViewUrl forKey:@"versionURL"];
             [[NSUserDefaults standardUserDefaults] synchronize];
+            [self.viewController performSelector:@selector(versionImply) withObject:nil afterDelay:1.0f];
         }
     }
 }
