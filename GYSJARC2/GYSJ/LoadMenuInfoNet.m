@@ -8,6 +8,8 @@
 
 #import "LoadMenuInfoNet.h"
 #import "JSONKit.h"
+#import "AllVarible.h"
+
 @implementation LoadMenuInfoNet
 
 @synthesize delegate;
@@ -17,7 +19,7 @@
 //    //// 192.168.1.18  ///lotusprize.com comdesignlab.com
     NSString *urlStr = nil;
     NSString *timestampLast = [[NSUserDefaults standardUserDefaults] objectForKey:@"timestamp"];
-    if (timestampLast.length > 0)
+    if (timestampLast.length > 0 && !UpdateSQLColomn)
         urlStr = [NSString stringWithFormat:@"http://comdesignlab.com/hid/dataUpdate.json?lastUpdateDate=%@", timestampLast];
     else
         urlStr = [NSString stringWithFormat:@"http://comdesignlab.com/hid/dataUpdate.json?lastUpdateDate=0"];

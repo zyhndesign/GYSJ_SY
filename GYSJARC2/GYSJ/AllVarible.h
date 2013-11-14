@@ -22,6 +22,7 @@
 
 
 BOOL ScrollSysncLock; //只允许一个scorllview相应手势
+BOOL UpdateSQLColomn;  //// 在更新版本时，添加了数据库的字段，就要更新数据库的所以字段，但内容zip不删除
 
 ViewController *RootViewContr;   //
 UIImageView *AllBgImageView;

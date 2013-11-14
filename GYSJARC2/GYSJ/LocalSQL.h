@@ -17,6 +17,8 @@
 + (BOOL)openDataBase;
 + (BOOL)closeDataBase;
 + (BOOL)createLocalTable;
++ (BOOL)checkTableColomn;
++ (BOOL)addColommToTable;
 
 + (NSArray*)getAllID;
 + (BOOL)getIsExistDataFromID:(NSString*)idstr;

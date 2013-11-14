@@ -8,6 +8,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ContentViewContr">
             <connections>
                 <outlet property="_webView" destination="6" id="15"/>
+                <outlet property="activeView" destination="Jzx-ht-vKR" id="xN5-jD-uhi"/>
                 <outlet property="proMarkLb" destination="gY8-0V-BHA" id="kvm-Ci-TFI"/>
                 <outlet property="proValueLb" destination="HaY-JH-jM2" id="7gV-SL-xnf"/>
                 <outlet property="progressV" destination="59f-CX-9f0" id="f2W-Qk-cbz"/>
@@ -63,6 +64,11 @@
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" animating="YES" style="gray" id="Jzx-ht-vKR">
+                    <rect key="frame" x="383" y="394" width="20" height="20"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="color" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                </activityIndicatorView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>

@@ -19,6 +19,7 @@
 #define TagSqlOrganizations 11
 
 #import "LocalSQL.h"
+#import "AllVarible.h"
 
 __strong sqlite3 *dataBase;
 
@@ -59,6 +60,53 @@ __strong sqlite3 *dataBase;
     return NO;
 }
 
++ (BOOL)checkTableColomn
+{
+    NSString *sqlStr = [NSString stringWithFormat:@"pragma table_info(mytable)"];
+    sqlite3_stmt *stmt;
+    if (sqlite3_prepare_v2(dataBase, [sqlStr UTF8String], -1, &stmt, 0) == SQLITE_OK)
+    {
+        while (sqlite3_step(stmt) == SQLITE_ROW)
+        {
+            NSString *colomnStr = [NSString stringWithFormat:@"%s", sqlite3_column_text(stmt, 1)];
+            if ([colomnStr isEqualToString:@"size"]) /// 或者postModifyDate
+            {
+                sqlite3_finalize(stmt);
+                return YES;
+            }
+        }
+        sqlite3_finalize(stmt);
+    }
+    sqlite3_finalize(stmt);
+    return NO;
+}
+
++ (BOOL)addColommToTable
+{
+    NSString *sqlStrOne = [NSString stringWithFormat:@"alter table mytable add size char default '1'"];
+    NSString *sqlStrTwo = [NSString stringWithFormat:@"alter table mytable add postModifyDate sqlite_int64 default 1"];
+    sqlite3_stmt *stmtOne;
+  //  NSLog(@"%d", sqlite3_prepare_v2(dataBase, [sqlStrOne UTF8String], -1, &stmtOne, 0) );
+    if(sqlite3_prepare_v2(dataBase, [sqlStrOne UTF8String], -1, &stmtOne, 0) == SQLITE_OK);
+    {
+        while (sqlite3_step(stmtOne) == SQLITE_ROW)
+        {
+            
+        }
+    }
+    sqlite3_finalize(stmtOne);
+    
+    sqlite3_stmt *stmtTwo;
+    if(sqlite3_prepare_v2(dataBase, [sqlStrTwo UTF8String], -1, &stmtTwo, 0) == SQLITE_OK);
+    {
+        while (sqlite3_step(stmtTwo) == SQLITE_ROW)
+        {
+            
+        }
+    }
+    sqlite3_finalize(stmtTwo);
+    return YES;
+}
 + (NSArray*)getAll
 {
     NSMutableArray *backAry = [NSMutableArray array];
@@ -522,24 +570,26 @@ __strong sqlite3 *dataBase;
     NSString *sqlStr = nil;
     if ([LocalSQL getIsExistDataFromID:idStr])
     {
-
-        if (![profileStr isEqualToString:[LocalSQL getProImageUrl:idStr]])
+        if (!UpdateSQLColomn)  /// 更新软件包时，如果要更新数据库，不对本地文件做处理
         {
-            NSString *ProImgeFormat = [[profileStr componentsSeparatedByString:@"."] lastObject];
-            
-            NSString *pathProFile = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:[NSString stringWithFormat:@"ProImage/%@.%@",idStr, ProImgeFormat]];
-            [[NSFileManager defaultManager] removeItemAtPath:pathProFile error:nil];
-        }
-        if (![backgroundStr isEqualToString:[LocalSQL getBgImageUrl:idStr]])
-        {
-            NSString *BgImgeFormat = [[backgroundStr componentsSeparatedByString:@"."] lastObject];
-            
-            NSString *pathBgFile = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:[NSString stringWithFormat:@"BgImage/%@.%@",idStr, BgImgeFormat]];
-            [[NSFileManager defaultManager] removeItemAtPath:pathBgFile error:nil];
+            if (![profileStr isEqualToString:[LocalSQL getProImageUrl:idStr]])
+            {
+                NSString *ProImgeFormat = [[profileStr componentsSeparatedByString:@"."] lastObject];
+                
+                NSString *pathProFile = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:[NSString stringWithFormat:@"ProImage/%@.%@",idStr, ProImgeFormat]];
+                [[NSFileManager defaultManager] removeItemAtPath:pathProFile error:nil];
+            }
+            if (![backgroundStr isEqualToString:[LocalSQL getBgImageUrl:idStr]])
+            {
+                NSString *BgImgeFormat = [[backgroundStr componentsSeparatedByString:@"."] lastObject];
+                
+                NSString *pathBgFile = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:[NSString stringWithFormat:@"BgImage/%@.%@",idStr, BgImgeFormat]];
+                [[NSFileManager defaultManager] removeItemAtPath:pathBgFile error:nil];
+            }
+            NSString *docPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:idStr];
+            [[NSFileManager defaultManager] removeItemAtPath:docPath error:nil];
         }
         sqlStr = [NSString stringWithFormat:@"update mytable set name='%@',md5='%@',timestamp='%@',url='%@',city='%@',coordinate='%@',genre='%@',summary='%@',year='%@',artists='%@',organizations='%@', postDate='%lld', background='%@',profile='%@', size='%@',postModifyDate='%lld' where id = '%@'",nameStr, md5Str, timestamp, urlStr, cityStr, coordStr, genreStr, summaryStr, yearStr, artistStr, organStr, postDateS,backgroundStr, profileStr, sizeStr, postModifyDate, idStr];
-        NSString *docPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:idStr];
-        [[NSFileManager defaultManager] removeItemAtPath:docPath error:nil];
     }
     else
     {

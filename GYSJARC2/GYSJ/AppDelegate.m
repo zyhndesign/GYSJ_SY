@@ -117,6 +117,11 @@ static NSString *const kTrackingId = @"UA-44083057-2";
     }
     [LocalSQL openDataBase];
     [LocalSQL createLocalTable];
+    if(![LocalSQL checkTableColomn])
+    {
+        UpdateSQLColomn = YES;
+        [LocalSQL addColommToTable];
+    }
     [LocalSQL closeDataBase];
 }
 

@@ -67,15 +67,26 @@
     NSString *doctPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)  lastObject];
     NSString *documentPath = [doctPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@", [initDict objectForKey:@"id"]]];
     BOOL dirBOOL = YES;
+    [activeView stopAnimating];
+    activeView.hidden = YES;
     if([[NSFileManager defaultManager] fileExistsAtPath:documentPath isDirectory:&dirBOOL])
     {
         [self webViewLoadLocalData];
         progressV.hidden  = YES;
         proValueLb.hidden = YES;
         proMarkLb.hidden  = YES;
+        activeView.hidden = YES;
     }
     else
     {
+        if ([[initDict objectForKey:@"size"] intValue] == 1)  /// 1.0版本因为数据库不完整 残留的问题
+        {
+            progressV.hidden  = YES;
+            proValueLb.hidden = YES;
+            proMarkLb.hidden  = YES;
+            activeView.hidden = NO;
+            [activeView startAnimating];
+        }
         [self startLoadSimpleZipData];
     }
 }
@@ -147,6 +158,8 @@
     progressV.hidden  = YES;
     proValueLb.hidden = YES;
     proMarkLb.hidden  = YES;
+    activeView.hidden = YES;
+    [activeView stopAnimating];
     [self webViewLoadLocalData];
 }
 
@@ -155,7 +168,9 @@
     progressV.hidden  = YES;
     proValueLb.hidden = YES;
     proMarkLb.hidden  = YES;
-
+    activeView.hidden = YES;
+    [activeView stopAnimating];
+    
     if ([Error code] == -1009)
     {
         UIAlertView *alerView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"网络连接失败，请检查网络设置。" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
