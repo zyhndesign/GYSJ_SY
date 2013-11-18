@@ -13,6 +13,7 @@
 #import "AllVarible.h"
 #import "Reachability.h"
 #import "NetworkDelegate.h"
+#import <sys/xattr.h>
 
 
 
@@ -104,6 +105,7 @@ static NSString *const kTrackingId = @"UA-44083057-2";
 - (void)preData
 {
     NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    [self addSkipBackupAttributeToItemAtURL:[NSURL fileURLWithPath:path]];
     NSString *docProImagePath = [path stringByAppendingPathComponent:@"ProImage"];
     NSString *docBgImagePath  = [path stringByAppendingPathComponent:@"BgImage"];
     BOOL doct = YES;
@@ -125,6 +127,15 @@ static NSString *const kTrackingId = @"UA-44083057-2";
     [LocalSQL closeDataBase];
 }
 
+- (BOOL)addSkipBackupAttributeToItemAtURL:(NSURL*)URL
+{
+    const char* filePath = [[URL path] fileSystemRepresentation];
+    const char* attrName = "com.apple.MobileBackup";
+    u_int8_t attrValue = 1;
+    
+    int result = setxattr(filePath, attrName, &attrValue, sizeof(attrValue), 0, 0);
+    return result == 0;
+}
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
