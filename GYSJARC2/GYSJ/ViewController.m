@@ -19,6 +19,7 @@
 #import "QueueProHanle.h"
 #import "QueueBgImHandle.h"
 #import "QueueZipHandle.h"
+#import "googleAnalytics/GAIDictionaryBuilder.h"
 
 @interface ViewController ()
 
@@ -29,7 +30,13 @@
 
 - (void)viewDidLoad
 {
-    self.trackedViewName = @"root";
+    self.screenName = @"content界面";
+    
+    [[GAI sharedInstance].defaultTracker set:self.screenName
+                                       value:@"content Screen"];
+    
+    // Send the screen view.
+    [[GAI sharedInstance].defaultTracker send:[[GAIDictionaryBuilder createAppView] build]];
     
     [QueueProHanle   init];
     [QueueBgImHandle init];

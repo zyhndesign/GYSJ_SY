@@ -26,13 +26,12 @@ static NSString *const kTrackingId = @"UA-44083057-2";
 @synthesize tracker = tracker_;
 
 
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [GAI sharedInstance].debug = YES;
-    [GAI sharedInstance].dispatchInterval = 120;
     [GAI sharedInstance].trackUncaughtExceptions = YES;
-    self.tracker = [[GAI sharedInstance] trackerWithTrackingId:kTrackingId];
+    [GAI sharedInstance].dispatchInterval =  120;
+    [[[GAI sharedInstance] logger] setLogLevel:kGAILogLevelVerbose];
+    [[GAI sharedInstance] trackerWithName:@"TongDao" trackingId:@"UA-44083057-2"];
     
     [self preData];
     //////////////////

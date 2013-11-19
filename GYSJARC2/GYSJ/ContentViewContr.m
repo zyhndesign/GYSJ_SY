@@ -14,6 +14,7 @@
 #import "QueueZipHandle.h"
 #import "MenuViewContr.h"
 #import "AllVarible.h"
+#import "googleAnalytics/GAIDictionaryBuilder.h"
 
 @interface ContentViewContr ()
 
@@ -44,7 +45,13 @@
 
 - (void)viewDidLoad
 {
-    self.trackedViewName = @"content";
+    self.screenName = @"content界面";
+    
+    [[GAI sharedInstance].defaultTracker set:self.screenName
+                                       value:@"content Screen"];
+    
+    // Send the screen view.
+    [[GAI sharedInstance].defaultTracker send:[[GAIDictionaryBuilder createAppView] build]];
     [super viewDidLoad];
     
     progressV.progressTintColor = LabelBgColor;
