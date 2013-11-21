@@ -213,7 +213,14 @@
     }
     if (StartValue && string.length > 0)
     {
-        [infoDict setObject:string forKey:keyStr];
+        if ([infoDict objectForKey:keyStr])
+        {
+            [infoDict setObject:[NSString stringWithFormat:@"%@%@", [infoDict objectForKey:keyStr], string] forKey:keyStr];
+        }
+        else
+        {
+            [infoDict setObject:string forKey:keyStr];
+        }
     }
 }
 

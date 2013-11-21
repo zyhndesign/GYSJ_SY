@@ -6,16 +6,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "GYSJ/TimeSViewContr.m"
-            timestampString = "405999370.736792"
+            filePath = "GYSJ/MoviePlayViewContr.m"
+            timestampString = "406719970.045137"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "192"
-            endingLineNumber = "192"
-            landmarkName = "-handlePinch:"
+            startingLineNumber = "43"
+            endingLineNumber = "43"
+            landmarkName = "-initwithURL:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

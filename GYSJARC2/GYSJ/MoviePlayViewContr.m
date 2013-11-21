@@ -40,7 +40,7 @@
 - (id)initwithURL:(NSString*)URLStr
 {
     if ([super init]) {
-        urlStr = URLStr;
+        urlStr = [URLStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     }
     return self;
 }
