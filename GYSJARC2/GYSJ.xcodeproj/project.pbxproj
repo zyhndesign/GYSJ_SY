@@ -952,8 +952,8 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Ling Li (4366PRAT2A)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ling Li (4366PRAT2A)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Zhongyi (Hunan) Industrial Design Co., Ltd. (FNB4FR5EG6)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Zhongyi (Hunan) Industrial Design Co., Ltd. (FNB4FR5EG6)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -968,8 +968,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "247639BA-BB77-4922-9C84-A7794D7863FF";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "247639BA-BB77-4922-9C84-A7794D7863FF";
+				PROVISIONING_PROFILE = "27951647-E9DE-4635-AD5B-C776F4628D1C";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "27951647-E9DE-4635-AD5B-C776F4628D1C";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
 			};
@@ -986,8 +986,8 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Ling Li (4366PRAT2A)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ling Li (4366PRAT2A)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Zhongyi (Hunan) Industrial Design Co., Ltd. (FNB4FR5EG6)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Zhongyi (Hunan) Industrial Design Co., Ltd. (FNB4FR5EG6)";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -995,8 +995,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "247639BA-BB77-4922-9C84-A7794D7863FF";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "247639BA-BB77-4922-9C84-A7794D7863FF";
+				PROVISIONING_PROFILE = "27951647-E9DE-4635-AD5B-C776F4628D1C";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "27951647-E9DE-4635-AD5B-C776F4628D1C";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
 				VALIDATE_PRODUCT = YES;
@@ -1007,8 +1007,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Ling Li (4366PRAT2A)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ling Li (4366PRAT2A)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Zhongyi (Hunan) Industrial Design Co., Ltd. (FNB4FR5EG6)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Zhongyi (Hunan) Industrial Design Co., Ltd. (FNB4FR5EG6)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GYSJ/GYSJ-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -1024,8 +1024,8 @@
 					"/Users/sunyong/Desktop/company/中意/GYSJ_SY/GYSJARC2/GYSJ/Library",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "247639BA-BB77-4922-9C84-A7794D7863FF";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "247639BA-BB77-4922-9C84-A7794D7863FF";
+				PROVISIONING_PROFILE = "27951647-E9DE-4635-AD5B-C776F4628D1C";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "27951647-E9DE-4635-AD5B-C776F4628D1C";
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
@@ -1036,8 +1036,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Ling Li (4366PRAT2A)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ling Li (4366PRAT2A)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Zhongyi (Hunan) Industrial Design Co., Ltd. (FNB4FR5EG6)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Zhongyi (Hunan) Industrial Design Co., Ltd. (FNB4FR5EG6)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GYSJ/GYSJ-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -1053,8 +1053,8 @@
 					"/Users/sunyong/Desktop/company/中意/GYSJ_SY/GYSJARC2/GYSJ/Library",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "247639BA-BB77-4922-9C84-A7794D7863FF";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "247639BA-BB77-4922-9C84-A7794D7863FF";
+				PROVISIONING_PROFILE = "27951647-E9DE-4635-AD5B-C776F4628D1C";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "27951647-E9DE-4635-AD5B-C776F4628D1C";
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
