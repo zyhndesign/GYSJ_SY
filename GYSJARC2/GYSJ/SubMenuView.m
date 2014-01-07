@@ -265,6 +265,7 @@ static NSString *beferoImage;
 }
 
 static BOOL beforeIsFirstLast;  /// 阻止最后一个和第一个换背景的闪烁，至于为什么，没找到为什么，感觉这样行，结果果真行哦
+// 有点乱，没整理哦  可以用锁机制来限制闪屏
 - (void)updageBgImage:(BOOL)isFirstLast
 {
     SimpMenuView *simpMview = (SimpMenuView*)[_scrollView viewWithTag:(_scrollView.contentOffset.y/SimpMenuHeigh+1)*10];
